@@ -13,6 +13,7 @@
     <PackageIcon>ShieldIcon.png</PackageIcon>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>latest</LangVersion>
+    <UserSecretsId>1dfd45f1-76b2-443c-8579-d6f1995981f8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
