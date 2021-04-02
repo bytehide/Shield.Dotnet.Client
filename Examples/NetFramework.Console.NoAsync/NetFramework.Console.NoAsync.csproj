@@ -127,7 +127,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Shield.Client\Shield.Client.csproj">
+    <ProjectReference Include="..\..\Shield.Client.csproj">
       <Project>{3d23f395-320b-44d6-bf7a-1ef970c236aa}</Project>
       <Name>Shield.Client</Name>
     </ProjectReference>

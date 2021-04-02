@@ -17,13 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\ShieldVSExtension\Resources\ShieldIcon.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.1.1" />
     <PackageReference Include="Microsoft.AspNet.SignalR" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.1" />
