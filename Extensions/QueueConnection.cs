@@ -28,7 +28,8 @@ namespace Shield.Client.Extensions
         }
         public QueueConnection(string queueName)
         {
-            BusClient = new ServiceBusClient("Endpoint=sb://busecito.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=CPodVabvoZ0KutlGkvaIdh6majgNSg7nrcQoy1yIK64=");
+            //TODO: Change
+            BusClient = new ServiceBusClient("Endpoint=sb://dotnetsafer.servicebus.windows.net/;SharedAccessKeyName=CLI;SharedAccessKey=koL+6ZQLUUVo7du5dtaFuo8cYrzDAIhXpHDWBQ1vHnU=");
 
             BusProcessor = BusClient.CreateProcessor(queueName);
             BusProcessor.ProcessMessageAsync += ReceiverOnProcessMessageAsync;
