@@ -10,7 +10,7 @@
     <Description>Dotnetsafer shield client for .NET, manage, update and protect your .NET applications from your own developments.</Description>
     <Copyright>Dotnetsafer</Copyright>
     <PackageProjectUrl>https://dotnetsafer.com/shield</PackageProjectUrl>
-    <PackageIcon>ShieldIcon.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <LangVersion>latest</LangVersion>
     <UserSecretsId>1dfd45f1-76b2-443c-8579-d6f1995981f8</UserSecretsId>
@@ -25,6 +25,13 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="RestSharp.Newtonsoft.Json" Version="1.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="img\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
