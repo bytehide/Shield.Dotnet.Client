@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shield.Client\Shield.Client.csproj" />
+    <ProjectReference Include="..\..\Shield.Client.csproj" />
   </ItemGroup>
 
 </Project>
