@@ -17,6 +17,8 @@ namespace Shield.Client
         public ShieldConnector Connector { get; set; }
         public ShieldConfiguration Configuration { get; set; }
 
+        private RestClient Client { get; }
+
         internal ILogger CustomLogger { get; set; }
         public static ShieldClient CreateInstance(string apiToken)
         {
@@ -38,27 +40,42 @@ namespace Shield.Client
         {
             CustomLogger = customLogger;
 
-            var client = new RestClient(ApiEndpoint) {Authenticator = new JwtAuthenticator(apiToken)};
+            Client = new RestClient(ApiEndpoint) {Authenticator = new JwtAuthenticator(apiToken)};
 
-            client.AddDefaultHeader("x-version", apiVersion);
+            Client.AddDefaultHeader("x-version", apiVersion);
 
             var checkToken = new RestRequest("authorization/check");
 
-            var result = client.Execute(checkToken, Method.GET);
+            var result = Client.Execute(checkToken, Method.GET);
 
-            if (result.StatusCode == HttpStatusCode.Unauthorized)
+            if (result.StatusCode == HttpStatusCode.Unauthorized || result.StatusCode == 0)
             {
                 customLogger?.LogCritical("The api token provided is invalid, the client cannot be started.");
                 throw new Exception("The authorization is not correct, check the api token used or log in to your account to generate a new one.");
             }
 
-            Project = ShieldProject.CreateInstance(client,this);
-            Application = ShieldApplication.CreateInstance(client,this);
-            Tasks = ShieldTasks.CreateInstance(client,this);
-            Connector = ShieldConnector.CreateInstance(client,this);
+            Project = ShieldProject.CreateInstance(Client, this);
+            Application = ShieldApplication.CreateInstance(Client, this);
+            Tasks = ShieldTasks.CreateInstance(Client, this);
+            Connector = ShieldConnector.CreateInstance(Client, this);
             Configuration = ShieldConfiguration.CreateInstance();
 
             customLogger?.LogDebug("Shield Client instantiated");
+        }
+        /// <summary>
+        /// Check if current client has connection to the API.
+        /// </summary>
+        /// <param name="code">Returned connection status code.</param>
+        /// <returns></returns>
+        public bool CheckConnection(out HttpStatusCode code)
+        {
+            var checkToken = new RestRequest("authorization/check");
+
+            var result = Client.Execute(checkToken, Method.GET);
+
+            code = result.StatusCode;
+
+            return code != HttpStatusCode.Unauthorized && code != 0;
         }
     }
 }
