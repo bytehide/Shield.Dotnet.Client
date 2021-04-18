@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Shield.API.Models.Protections {
+namespace Shield.Client.Models.API.Protections {
 	public class ProtectionModel {
 		public string Id { get; set; }
 		public string Description { get; set; }

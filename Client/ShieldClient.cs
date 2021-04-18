@@ -16,6 +16,7 @@ namespace Shield.Client
         public ShieldTasks Tasks { get; set; }
         public ShieldConnector Connector { get; set; }
         public ShieldConfiguration Configuration { get; set; }
+        public ShieldProtections Protections { get; set; }
 
         private RestClient Client { get; }
 
@@ -59,6 +60,7 @@ namespace Shield.Client
             Tasks = ShieldTasks.CreateInstance(Client, this);
             Connector = ShieldConnector.CreateInstance(Client, this);
             Configuration = ShieldConfiguration.CreateInstance();
+            Protections = ShieldProtections.CreateInstance(Client,this);
 
             customLogger?.LogDebug("Shield Client instantiated");
         }
