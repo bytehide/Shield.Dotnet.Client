@@ -3,13 +3,12 @@ using System.Net;
 using RestSharp;
 using RestSharp.Authenticators;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace Shield.Client
 {
     public class ShieldClient
     {
-        //TODO: Change on production
-        private const string ApiEndpoint = "https://localhost:44395/api";
 
         public ShieldProject Project { get; set; }
         public ShieldApplication Application { get; set; }
@@ -21,6 +20,9 @@ namespace Shield.Client
         private RestClient Client { get; }
 
         internal ILogger CustomLogger { get; set; }
+
+        internal IConfiguration ClientConfiguration { get; set; }
+
         public static ShieldClient CreateInstance(string apiToken)
         {
             return new ShieldClient(apiToken, null);
@@ -39,11 +41,15 @@ namespace Shield.Client
         }
         public ShieldClient(string apiToken, ILogger customLogger, string apiVersion = "1.1")
         {
+            ClientConfiguration = new ConfigurationBuilder()
+                .AddJsonFile("AppSettings.json", true, true)
+                .Build();
+
             CustomLogger = customLogger;
 
-            Client = new RestClient(ApiEndpoint) {Authenticator = new JwtAuthenticator(apiToken)};
+            Client = new RestClient(ClientConfiguration["url"]) {Authenticator = new JwtAuthenticator(apiToken)};
 
-            Client.AddDefaultHeader("x-version", apiVersion);
+            Client.AddDefaultHeader("x-version", ClientConfiguration["version"] ?? apiVersion);
 
             var checkToken = new RestRequest("authorization/check");
 
