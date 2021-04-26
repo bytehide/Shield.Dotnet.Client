@@ -55,7 +55,7 @@ namespace Shield.Client
 
             var result = Client.Execute(checkToken, Method.GET);
 
-            if (result.StatusCode == HttpStatusCode.Unauthorized || result.StatusCode == 0)
+            if (result.StatusCode is HttpStatusCode.Unauthorized or 0)
             {
                 customLogger?.LogCritical("The api token provided is invalid, the client cannot be started.");
                 throw new Exception("The authorization is not correct, check the api token used or log in to your account to generate a new one.");
