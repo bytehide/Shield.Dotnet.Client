@@ -45,6 +45,7 @@
 - [ShieldProtections](#T-Shield-Client-ShieldProtections 'Shield.Client.ShieldProtections')
   - [GetProtections(projectKey)](#M-Shield-Client-ShieldProtections-GetProtections-System-String- 'Shield.Client.ShieldProtections.GetProtections(System.String)')
   - [GetProtectionsAsync(projectKey)](#M-Shield-Client-ShieldProtections-GetProtectionsAsync-System-String- 'Shield.Client.ShieldProtections.GetProtectionsAsync(System.String)')
+- [ShieldTasks](#T-Shield-Client-ShieldTasks 'Shield.Client.ShieldTasks')
 - [StartedConnection](#T-Shield-Client-StartedConnection 'Shield.Client.StartedConnection')
 
 <a name='T-Shield-Client-Helpers-DependenciesHelper'></a>
@@ -715,6 +716,17 @@ Gets available protections of a project with his key async.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | projectKey | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | Project key |
+
+<a name='T-Shield-Client-ShieldTasks'></a>
+## ShieldTasks `type`
+
+##### Namespace
+
+Shield.Client
+
+##### Summary
+
+
 
 <a name='T-Shield-Client-StartedConnection'></a>
 ## StartedConnection `type`

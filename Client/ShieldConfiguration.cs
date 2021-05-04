@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Shield.Client.Models;
 using Shield.Client.Models.API.Application;
 using Shield.Client.Models.API.Project;
@@ -29,7 +29,7 @@ namespace Shield.Client
         //    => JsonConvert.DeserializeObject<ApplicationConfigurationDto>(await File.ReadAllTextAsync(path));
 
         public ApplicationConfigurationDto LoadApplicationConfigurationFromFile(string path)
-            => JsonConvert.DeserializeObject<ApplicationConfigurationDto>(File.ReadAllText(path));
+            => JsonSerializer.Deserialize<ApplicationConfigurationDto>(File.ReadAllText(path));
 
         //public async Task<ApplicationConfigurationDto> LoadApplicationConfigurationFromFileOrDefaultAsync(string path)
         //{
@@ -47,7 +47,7 @@ namespace Shield.Client
         {
             try
             {
-                return !File.Exists(path) ? MakeApplicationConfiguration(ShieldConfigurationPresets.Presets.Balance) : JsonConvert.DeserializeObject<ApplicationConfigurationDto>(File.ReadAllText(path));
+                return !File.Exists(path) ? MakeApplicationConfiguration(ShieldConfigurationPresets.Presets.Balance) : JsonSerializer.Deserialize<ApplicationConfigurationDto>(File.ReadAllText(path));
             }
             catch
             {
@@ -57,7 +57,7 @@ namespace Shield.Client
         //public async Task<ProjectConfigurationDto> LoadProjectConfigurationFromFileAsync(string path)
         //    => JsonConvert.DeserializeObject<ProjectConfigurationDto>(await File.ReadAllTextAsync(path));
         public ProjectConfigurationDto LoadProjectConfigurationFromFile(string path)
-            => JsonConvert.DeserializeObject<ProjectConfigurationDto>(File.ReadAllText(path));
+            => JsonSerializer.Deserialize<ProjectConfigurationDto>(File.ReadAllText(path));
 
         //public async Task<ProjectConfigurationDto> LoadProjectConfigurationFromFileOrDefaultAsync(string path)
         //{
@@ -75,7 +75,7 @@ namespace Shield.Client
         {
             try
             {
-                return !File.Exists(path) ? MakeProjectConfiguration(ShieldConfigurationPresets.Presets.Balance) : JsonConvert.DeserializeObject<ProjectConfigurationDto>(File.ReadAllText(path));
+                return !File.Exists(path) ? MakeProjectConfiguration(ShieldConfigurationPresets.Presets.Balance) : JsonSerializer.Deserialize<ProjectConfigurationDto>(File.ReadAllText(path));
             }
             catch
             {

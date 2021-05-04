@@ -7,6 +7,9 @@ using Shield.Client.Models.API.Application;
 
 namespace Shield.Client
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ShieldTasks
     {
         private readonly RestClient _client;

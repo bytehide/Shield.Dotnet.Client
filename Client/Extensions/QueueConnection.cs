@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
-using Newtonsoft.Json;
 using Shield.Client.Models;
 
 namespace Shield.Client.Extensions
@@ -38,9 +38,12 @@ namespace Shield.Client.Extensions
 
         private async Task ReceiverOnProcessMessageAsync(ProcessMessageEventArgs arg)
         {
-            var message = JsonConvert.DeserializeObject<QueueLogMessageModel>(arg.Message.Body.ToString());
+            var message = JsonSerializer.Deserialize<QueueLogMessageModel>(arg.Message.Body.ToString());
 
             await arg.CompleteMessageAsync(arg.Message).ConfigureAwait(false);
+
+            if (message is null)
+                return;
 
             if (!Methods.TryGetValue(message.Method, out var action))
                 return;

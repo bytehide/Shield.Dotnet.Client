@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Text.Json;
 using Microsoft.AspNetCore.SignalR.Client;
-using Newtonsoft.Json;
 using Shield.Client.Models;
 using Shield.Client.Models.API.Application;
 
@@ -28,7 +28,7 @@ namespace Shield.Client.Extensions
             => connection.On(id, action);
 
         public static void OnSuccess(this ProtectionResult result, QueueConnection connection, Action<ProtectedApplicationDto> action)
-            => connection.On(result.OnSuccess, (message, level, time) => action(JsonConvert.DeserializeObject<ProtectedApplicationDto>(message)));
+            => connection.On(result.OnSuccess, (message, level, time) => action(JsonSerializer.Deserialize<ProtectedApplicationDto>(message)));
         public static void OnError(this ProtectionResult result, QueueConnection connection, Action<string> action)
             => connection.On(result.OnError, (message, level, time) => action(message));
         public static void OnClose(this ProtectionResult result, QueueConnection connection, Action<string> action)
