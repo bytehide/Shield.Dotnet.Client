@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Shield.Client.Models.API.Protections {
+namespace Shield.Client.Fr.Models.API.Protections {
 	public class ProtectionLogDTO {
 		public int User { get; set; }
 		public int Prepare { get; set; } //Es el id de prepare

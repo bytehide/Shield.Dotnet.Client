@@ -1,0 +1,23 @@
+﻿using System.IO;
+using System.Text.Json;
+using Shield.Client.Fr.Models.API.Application;
+using Shield.Client.Fr.Models.API.Project;
+
+namespace Shield.Client.Fr.Extensions
+{
+    public static class ConfigurationExtensions
+    {
+        //public static async Task SaveToFileAsync(this ApplicationConfigurationDto config, string path, string applicationName)
+        //    => await File.WriteAllTextAsync(Path.Combine(path, $"shield.application.${applicationName}.json"), JsonConvert.SerializeObject(config));
+
+        public static void SaveToFile(this ApplicationConfigurationDto config, string path, string applicationName)
+            =>  File.WriteAllText(Path.Combine(path, $"shield.application.{applicationName}.json"), JsonSerializer.Serialize(config));
+
+        //public static async Task SaveToFileAsync(this ProjectConfigurationDto config, string path, string projectName)
+        //    => await File.WriteAllTextAsync(Path.Combine(path,$"shield.project.${projectName}.json"), JsonConvert.SerializeObject(config));
+
+        public static void SaveToFile(this ProjectConfigurationDto config, string path, string projectName)
+            =>  File.WriteAllText(Path.Combine(path, $"shield.project.{projectName}.json"), JsonSerializer.Serialize(config));
+
+    }
+}
