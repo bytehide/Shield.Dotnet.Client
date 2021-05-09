@@ -47,7 +47,11 @@ namespace Shield.Client
 
             CustomLogger = customLogger;
 
-            Client = new RestClient(ClientConfiguration["url"]) {Authenticator = new JwtAuthenticator(apiToken)};
+            Client = new RestClient(ClientConfiguration["url"])
+            {
+                Authenticator = new JwtAuthenticator(apiToken), Timeout = 1000 * 60 * 10
+            };
+
 
             Client.AddDefaultHeader("x-version", ClientConfiguration["version"] ?? apiVersion);
 

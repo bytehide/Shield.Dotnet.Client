@@ -19,7 +19,7 @@ namespace Shield.Client
 
         public ShieldConnector(IRestClient client, ShieldClient parent)
         {
-            _client = new RestClient(client.BaseUrl ?? throw new InvalidOperationException()) {Authenticator = client.Authenticator};
+            _client = new RestClient(client.BaseUrl ?? throw new InvalidOperationException()) {Authenticator = client.Authenticator, Timeout = 1000 * 60 * 10};
             //Not required version for logger (Only in dev).
             if (!client.BaseUrl.ToString().ToLower().StartsWith("https://api.dotnetsafer.com"))
                 _client.BaseUrl = new Uri(_client.BaseUrl?.AbsoluteUri.Replace(_client.BaseUrl.PathAndQuery,null) ?? throw new InvalidOperationException());
