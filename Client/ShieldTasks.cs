@@ -56,21 +56,38 @@ namespace Shield.Client
                         .AddQueryParameter("projectKey", projectKey)
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)
-                        .AddJsonBody(configuration ?? new ApplicationConfigurationDto {InheritFromProject = true});
+                        .AddJsonBody(configuration ?? new ApplicationConfigurationDto { InheritFromProject = true });
 
                 if (!string.IsNullOrEmpty(queueMethod))
                 {
                     request.AddQueryParameter("useQueues", "true");
                     request.AddQueryParameter("onLoggerQueue", queueMethod);
                 }
-                    
 
-                
-                var result = await _client.PostAsync<ProtectionResult>(request);
 
-                Parent.CustomLogger?.LogDebug($"The protection process has started successfully with the identifier: {runKey}");
 
-                return result;
+                //var result = await _client.PostAsync<ProtectionResult>(request);
+
+                _client.ThrowOnDeserializationError = true;
+
+                try
+                {
+                    var result = await _client.PostAsync<ProtectionResult>(request);
+
+                    Parent.CustomLogger?.LogDebug($"The protection process has started successfully with the identifier: {runKey}");
+
+                    return result;
+
+                }
+                catch (DeserializationException ex)
+                {
+                    throw new Exception(ex.Response.Content, ex);
+                }
+            }
+            catch (Exception ex) when (ex.InnerException.GetType() == typeof(DeserializationException))
+            {
+                Parent.CustomLogger?.LogCritical($"An error occurred while starting the protection process.");
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -78,6 +95,11 @@ namespace Shield.Client
                 throw new Exception($"An error occurred while starting the protection process. {ex.Message}");
             }
         }
+
+
+
+
+
         public ProtectionResult ProtectSingleFile(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration, string queueMethod = null)
         {
             try
@@ -89,7 +111,7 @@ namespace Shield.Client
                         .AddQueryParameter("projectKey", projectKey)
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)
-                        .AddJsonBody(configuration ?? new ApplicationConfigurationDto {InheritFromProject = true});
+                        .AddJsonBody(configuration ?? new ApplicationConfigurationDto { InheritFromProject = true });
 
                 if (!string.IsNullOrEmpty(queueMethod))
                 {
@@ -98,7 +120,7 @@ namespace Shield.Client
                 }
 
 
-                var result =  _client.Post<ProtectionResult>(request);
+                var result = _client.Post<ProtectionResult>(request);
 
                 if (!result.IsSuccessful)
                     return null;
