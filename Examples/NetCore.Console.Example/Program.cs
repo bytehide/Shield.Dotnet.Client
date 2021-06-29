@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -9,12 +12,12 @@ namespace NetCore.Console.Example
         private static async Task Main(string[] args)
         {
             //
-            //
-            //  This is an example to use Shield client in .NET Core app with async methods.
-            // 
-            //
+			//
+			//  This is an example to use Shield client in .NET Core app with async methods.
+			// 
+			//
 
-            var services = new ServiceCollection();
+			var services = new ServiceCollection();
             ConfigureServices(services);
             await using var serviceProvider = services.BuildServiceProvider();
             var app = serviceProvider.GetService<Consumer>();

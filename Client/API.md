@@ -15,6 +15,13 @@
   - [GetExtension(mimeType,throwErrorIfNotFound)](#M-Shield-Client-Helpers-MimeTypeMap-GetExtension-System-String,System-Boolean- 'Shield.Client.Helpers.MimeTypeMap.GetExtension(System.String,System.Boolean)')
   - [GetMimeType(str)](#M-Shield-Client-Helpers-MimeTypeMap-GetMimeType-System-String- 'Shield.Client.Helpers.MimeTypeMap.GetMimeType(System.String)')
   - [TryGetMimeType(str,mimeType)](#M-Shield-Client-Helpers-MimeTypeMap-TryGetMimeType-System-String,System-String@- 'Shield.Client.Helpers.MimeTypeMap.TryGetMimeType(System.String,System.String@)')
+- [ServerSentEvents](#T-Shield-Client-Extensions-ServerSentEvents 'Shield.Client.Extensions.ServerSentEvents')
+  - [#ctor(connectionData,url)](#M-Shield-Client-Extensions-ServerSentEvents-#ctor-Shield-Client-Models-ServerSentEventConnectionExternalModel,System-String- 'Shield.Client.Extensions.ServerSentEvents.#ctor(Shield.Client.Models.ServerSentEventConnectionExternalModel,System.String)')
+  - [Destroy(method)](#M-Shield-Client-Extensions-ServerSentEvents-Destroy-System-String- 'Shield.Client.Extensions.ServerSentEvents.Destroy(System.String)')
+  - [On(method,action)](#M-Shield-Client-Extensions-ServerSentEvents-On-System-String,System-Action{System-String,System-String,System-DateTime}- 'Shield.Client.Extensions.ServerSentEvents.On(System.String,System.Action{System.String,System.String,System.DateTime})')
+  - [Start()](#M-Shield-Client-Extensions-ServerSentEvents-Start 'Shield.Client.Extensions.ServerSentEvents.Start')
+  - [StartAsync()](#M-Shield-Client-Extensions-ServerSentEvents-StartAsync 'Shield.Client.Extensions.ServerSentEvents.StartAsync')
+  - [Stop()](#M-Shield-Client-Extensions-ServerSentEvents-Stop 'Shield.Client.Extensions.ServerSentEvents.Stop')
 - [ShieldApplication](#T-Shield-Client-ShieldApplication 'Shield.Client.ShieldApplication')
   - [DownloadApplication(downloadKey,format)](#M-Shield-Client-ShieldApplication-DownloadApplication-System-String,Shield-Client-Models-DownloadFormat- 'Shield.Client.ShieldApplication.DownloadApplication(System.String,Shield.Client.Models.DownloadFormat)')
   - [DownloadApplicationAsync(downloadKey,format)](#M-Shield-Client-ShieldApplication-DownloadApplicationAsync-System-String,Shield-Client-Models-DownloadFormat- 'Shield.Client.ShieldApplication.DownloadApplicationAsync(System.String,Shield.Client.Models.DownloadFormat)')
@@ -25,6 +32,8 @@
 - [ShieldClient](#T-Shield-Client-ShieldClient 'Shield.Client.ShieldClient')
   - [CheckConnection(code)](#M-Shield-Client-ShieldClient-CheckConnection-System-Net-HttpStatusCode@- 'Shield.Client.ShieldClient.CheckConnection(System.Net.HttpStatusCode@)')
 - [ShieldConnector](#T-Shield-Client-ShieldConnector 'Shield.Client.ShieldConnector')
+  - [CreateSseConnection()](#M-Shield-Client-ShieldConnector-CreateSseConnection 'Shield.Client.ShieldConnector.CreateSseConnection')
+  - [CreateSseConnection(taskId)](#M-Shield-Client-ShieldConnector-CreateSseConnection-System-String- 'Shield.Client.ShieldConnector.CreateSseConnection(System.String)')
   - [InstanceAndStartConnector(externalConnection,started)](#M-Shield-Client-ShieldConnector-InstanceAndStartConnector-Shield-Client-Models-HubConnectionExternalModel,Shield-Client-StartedConnection@- 'Shield.Client.ShieldConnector.InstanceAndStartConnector(Shield.Client.Models.HubConnectionExternalModel,Shield.Client.StartedConnection@)')
   - [InstanceAndStartHubConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceAndStartHubConnectorWithLogger-Shield-Client-Models-HubConnectionExternalModel,Shield-Client-StartedConnection@- 'Shield.Client.ShieldConnector.InstanceAndStartHubConnectorWithLogger(Shield.Client.Models.HubConnectionExternalModel,Shield.Client.StartedConnection@)')
   - [InstanceHubConnector(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceHubConnector-Shield-Client-Models-HubConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceHubConnector(Shield.Client.Models.HubConnectionExternalModel)')
@@ -36,6 +45,7 @@
   - [InstanceQueueConnector(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceQueueConnector-Shield-Client-Models-QueueConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceQueueConnector(Shield.Client.Models.QueueConnectionExternalModel)')
   - [InstanceQueueConnector(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceQueueConnector-Shield-Client-Models-QueueConnectionExternalModel,System-Boolean- 'Shield.Client.ShieldConnector.InstanceQueueConnector(Shield.Client.Models.QueueConnectionExternalModel,System.Boolean)')
   - [InstanceQueueConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceQueueConnectorWithLogger-Shield-Client-Models-QueueConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceQueueConnectorWithLogger(Shield.Client.Models.QueueConnectionExternalModel)')
+  - [InstanceSseConnector(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceSseConnector-Shield-Client-Models-ServerSentEventConnectionExternalModel,System-Boolean- 'Shield.Client.ShieldConnector.InstanceSseConnector(Shield.Client.Models.ServerSentEventConnectionExternalModel,System.Boolean)')
 - [ShieldFile](#T-Shield-Client-Models-ShieldFile 'Shield.Client.Models.ShieldFile')
 - [ShieldProject](#T-Shield-Client-ShieldProject 'Shield.Client.ShieldProject')
   - [FindByIdOrCreateExternalProject(projectName,projectKey)](#M-Shield-Client-ShieldProject-FindByIdOrCreateExternalProject-System-String,System-String- 'Shield.Client.ShieldProject.FindByIdOrCreateExternalProject(System.String,System.String)')
@@ -247,6 +257,91 @@ The MIME type.
 | ---- | ----------- |
 | [System.ArgumentNullException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentNullException 'System.ArgumentNullException') |  |
 
+<a name='T-Shield-Client-Extensions-ServerSentEvents'></a>
+## ServerSentEvents `type`
+
+##### Namespace
+
+Shield.Client.Extensions
+
+##### Summary
+
+
+
+<a name='M-Shield-Client-Extensions-ServerSentEvents-#ctor-Shield-Client-Models-ServerSentEventConnectionExternalModel,System-String-'></a>
+### #ctor(connectionData,url) `constructor`
+
+##### Summary
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| connectionData | [Shield.Client.Models.ServerSentEventConnectionExternalModel](#T-Shield-Client-Models-ServerSentEventConnectionExternalModel 'Shield.Client.Models.ServerSentEventConnectionExternalModel') |  |
+| url | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='M-Shield-Client-Extensions-ServerSentEvents-Destroy-System-String-'></a>
+### Destroy(method) `method`
+
+##### Summary
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| method | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='M-Shield-Client-Extensions-ServerSentEvents-On-System-String,System-Action{System-String,System-String,System-DateTime}-'></a>
+### On(method,action) `method`
+
+##### Summary
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| method | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| action | [System.Action{System.String,System.String,System.DateTime}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Action 'System.Action{System.String,System.String,System.DateTime}') |  |
+
+<a name='M-Shield-Client-Extensions-ServerSentEvents-Start'></a>
+### Start() `method`
+
+##### Summary
+
+
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-Shield-Client-Extensions-ServerSentEvents-StartAsync'></a>
+### StartAsync() `method`
+
+##### Summary
+
+
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-Shield-Client-Extensions-ServerSentEvents-Stop'></a>
+### Stop() `method`
+
+##### Summary
+
+
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='T-Shield-Client-ShieldApplication'></a>
 ## ShieldApplication `type`
 
@@ -396,6 +491,38 @@ Check if current client has connection to the API.
 ##### Namespace
 
 Shield.Client
+
+<a name='M-Shield-Client-ShieldConnector-CreateSseConnection'></a>
+### CreateSseConnection() `method`
+
+##### Summary
+
+
+
+##### Returns
+
+
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-Shield-Client-ShieldConnector-CreateSseConnection-System-String-'></a>
+### CreateSseConnection(taskId) `method`
+
+##### Summary
+
+
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| taskId | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
 <a name='M-Shield-Client-ShieldConnector-InstanceAndStartConnector-Shield-Client-Models-HubConnectionExternalModel,Shield-Client-StartedConnection@-'></a>
 ### InstanceAndStartConnector(externalConnection,started) `method`
@@ -587,6 +714,24 @@ Build a connection to the shield bus for the current protection process with cur
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | externalConnection | [Shield.Client.Models.QueueConnectionExternalModel](#T-Shield-Client-Models-QueueConnectionExternalModel 'Shield.Client.Models.QueueConnectionExternalModel') |  |
+
+<a name='M-Shield-Client-ShieldConnector-InstanceSseConnector-Shield-Client-Models-ServerSentEventConnectionExternalModel,System-Boolean-'></a>
+### InstanceSseConnector(externalConnection,withLogger) `method`
+
+##### Summary
+
+
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| externalConnection | [Shield.Client.Models.ServerSentEventConnectionExternalModel](#T-Shield-Client-Models-ServerSentEventConnectionExternalModel 'Shield.Client.Models.ServerSentEventConnectionExternalModel') |  |
+| withLogger | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') |  |
 
 <a name='T-Shield-Client-Models-ShieldFile'></a>
 ## ShieldFile `type`

@@ -31,9 +31,16 @@ namespace NetCore.Console.Example
             var dependencies = Directory.GetFiles($"{directory}").ToList();
 
             var client = ShieldClient.CreateInstance(
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjE4ODgzMmEyLTUxODktNDMwZS05NGFmLTc3MTJkZTBiM2FmZCIsInVuaXF1ZV9uYW1lIjoiOTE4ZDgxNmYtZDI4Zi00YThjLWE3MWItMzZiM2VkYTdlNjY4IiwidmVyc2lvbiI6IjEuMC4wIiwic2VydmljZSI6ImRvdG5ldHNhZmVyIiwiZWRpdGlvbiI6ImNvbW11bml0eSIsImp0aSI6IjY5YTlkNjdiLWM4ZTgtNGNhYS05MWM3LTk5NDIwZGE2ZDU5YyIsImV4cCI6MTYxNzQwMjg1Mn0.Ohr4WeJaU5w_2CP1QhzAepis_xKmDheLYxz4BN2rLEo"
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjE4ODgzMmEyLTUxODktNDMwZS05NGFmLTc3MTJkZTBiM2FmZCIsInVuaXF1ZV9uYW1lIjoiOTE4ZDgxNmYtZDI4Zi00YThjLWE3MWItMzZiM2VkYTdlNjY4IiwidmVyc2lvbiI6IjEuMC4wIiwic2VydmljZSI6ImRvdG5ldHNhZmVyIiwiZWRpdGlvbiI6ImNvbW11bml0eSIsImp0aSI6ImFjOGRjMzA1LTNhNTEtNGQ0OC1iYTM2LTQ3NTVjYTYzYWEzMSIsImV4cCI6MTYyNTAwNzAxOH0.14XV2lcAoByRESSwC5D_DixJldKeRcE2d0pOigEHINo"
                 , _logger);
 
+            var sss = client.Connector.CreateSseConnection();
+
+            var sse = client.Connector.InstanceSseConnector(sss, true);
+
+            sse.Start();
+
+            var f = 0;
 
 
             var projectTest = await client.Project.FindOrCreateExternalProjectAsync("arg3");

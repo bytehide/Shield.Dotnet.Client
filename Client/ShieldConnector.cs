@@ -41,7 +41,23 @@ namespace Shield.Client
         {
             return new QueueConnectionExternalModel { TaskId = taskId, OnLogger = Guid.NewGuid().ToString() };
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ServerSentEventConnectionExternalModel CreateSseConnection()
+        {
+            return CreateSseConnection(Guid.NewGuid().ToString());
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
+        public ServerSentEventConnectionExternalModel CreateSseConnection(string taskId)
+        {
+            return new ServerSentEventConnectionExternalModel { TaskId = taskId, OnLogger = Guid.NewGuid().ToString() };
+        }
         public HubConnectionExternalModel CreateHubConnection()
         {
             return CreateHubConnection(Guid.NewGuid().ToString());
@@ -272,6 +288,36 @@ namespace Shield.Client
                 Parent.CustomLogger?.LogDebug("The current logger has been configured as the output of the connection logs.");
 
                 connection.On(externalConnection.OnLogger, (message, level, time) => OnCustomLog(time.ToString(CultureInfo.InvariantCulture),message,level));
+
+                return connection;
+
+            }
+            catch (Exception ex)
+            {
+                Parent.CustomLogger?.LogCritical("An error occurred while creating the connection to the shield server for the current process.");
+                throw new Exception($"An error occurred while creating the connection to the shield server for the current process: {ex.Message}");
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="externalConnection"></param>
+        /// <param name="withLogger"></param>
+        /// <returns></returns>
+        public ServerSentEvents InstanceSseConnector(ServerSentEventConnectionExternalModel externalConnection, bool withLogger)
+        {
+            try
+            {
+                var connection = new ServerSentEvents(externalConnection, "https://localhost:44395/api/events/suscribe");
+                 
+                if (!withLogger) return connection;
+
+                if (Parent.CustomLogger is null)
+                    throw new Exception("The \"WithLogger\" method cannot be called if a custom logger has not been provided in the shield client.");
+
+                Parent.CustomLogger?.LogDebug("The current logger has been configured as the output of the connection logs.");
+
+                connection.On(externalConnection.OnLogger, (message, level, time) => OnCustomLog(time.ToString(CultureInfo.InvariantCulture), message, level));
 
                 return connection;
 
