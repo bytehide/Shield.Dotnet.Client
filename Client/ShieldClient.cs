@@ -52,7 +52,6 @@ namespace Shield.Client
                 Authenticator = new JwtAuthenticator(apiToken), Timeout = 1000 * 60 * 10
             };
 
-
             Client.AddDefaultHeader("x-version", ClientConfiguration["version"] ?? apiVersion);
 
             var checkToken = new RestRequest("authorization/check");
@@ -68,7 +67,7 @@ namespace Shield.Client
             Project = ShieldProject.CreateInstance(Client, this);
             Application = ShieldApplication.CreateInstance(Client, this);
             Tasks = ShieldTasks.CreateInstance(Client, this);
-            Connector = ShieldConnector.CreateInstance(Client, this);
+            Connector = ShieldConnector.CreateInstance(Client, this, apiToken, ClientConfiguration["version"] ?? apiVersion);
             Configuration = ShieldConfiguration.CreateInstance();
             Protections = ShieldProtections.CreateInstance(Client,this);
 

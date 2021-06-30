@@ -14,16 +14,6 @@ namespace Shield.Client.Helpers
             return $"&{queryString}";
         }
 
-        public static string ToQueryString(this ServerSentEventConnectionExternalModel sseConnection)
-        {
-            var queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);
-
-            queryString.Add("id", sseConnection.TaskId);
-            queryString.Add("logId", sseConnection.OnLogger);
-
-            return $"?{queryString}";
-        }
-
         public static string ToQueryString(this HubConnectionModel hubConnection)
         {
             var queryString = System.Web.HttpUtility.ParseQueryString(string.Empty);

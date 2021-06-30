@@ -16,11 +16,14 @@
   - [GetMimeType(str)](#M-Shield-Client-Helpers-MimeTypeMap-GetMimeType-System-String- 'Shield.Client.Helpers.MimeTypeMap.GetMimeType(System.String)')
   - [TryGetMimeType(str,mimeType)](#M-Shield-Client-Helpers-MimeTypeMap-TryGetMimeType-System-String,System-String@- 'Shield.Client.Helpers.MimeTypeMap.TryGetMimeType(System.String,System.String@)')
 - [ServerSentEvents](#T-Shield-Client-Extensions-ServerSentEvents 'Shield.Client.Extensions.ServerSentEvents')
-  - [#ctor(connectionData,url)](#M-Shield-Client-Extensions-ServerSentEvents-#ctor-Shield-Client-Models-ServerSentEventConnectionExternalModel,System-String- 'Shield.Client.Extensions.ServerSentEvents.#ctor(Shield.Client.Models.ServerSentEventConnectionExternalModel,System.String)')
+  - [#ctor(authToken,version,baseUrl)](#M-Shield-Client-Extensions-ServerSentEvents-#ctor-System-String,System-String,System-String- 'Shield.Client.Extensions.ServerSentEvents.#ctor(System.String,System.String,System.String)')
+  - [OnClosed](#P-Shield-Client-Extensions-ServerSentEvents-OnClosed 'Shield.Client.Extensions.ServerSentEvents.OnClosed')
+  - [OnConnected](#P-Shield-Client-Extensions-ServerSentEvents-OnConnected 'Shield.Client.Extensions.ServerSentEvents.OnConnected')
   - [Destroy(method)](#M-Shield-Client-Extensions-ServerSentEvents-Destroy-System-String- 'Shield.Client.Extensions.ServerSentEvents.Destroy(System.String)')
   - [On(method,action)](#M-Shield-Client-Extensions-ServerSentEvents-On-System-String,System-Action{System-String,System-String,System-DateTime}- 'Shield.Client.Extensions.ServerSentEvents.On(System.String,System.Action{System.String,System.String,System.DateTime})')
-  - [Start()](#M-Shield-Client-Extensions-ServerSentEvents-Start 'Shield.Client.Extensions.ServerSentEvents.Start')
-  - [StartAsync()](#M-Shield-Client-Extensions-ServerSentEvents-StartAsync 'Shield.Client.Extensions.ServerSentEvents.StartAsync')
+  - [ProtectSingleFile()](#M-Shield-Client-Extensions-ServerSentEvents-ProtectSingleFile-System-String,System-String,Shield-Client-Models-API-Application-ApplicationConfigurationDto- 'Shield.Client.Extensions.ServerSentEvents.ProtectSingleFile(System.String,System.String,Shield.Client.Models.API.Application.ApplicationConfigurationDto)')
+  - [ProtectSingleFileAsync(projectKey,fileBlob,configuration)](#M-Shield-Client-Extensions-ServerSentEvents-ProtectSingleFileAsync-System-String,System-String,Shield-Client-Models-API-Application-ApplicationConfigurationDto- 'Shield.Client.Extensions.ServerSentEvents.ProtectSingleFileAsync(System.String,System.String,Shield.Client.Models.API.Application.ApplicationConfigurationDto)')
+  - [SetDefaultLogger(action)](#M-Shield-Client-Extensions-ServerSentEvents-SetDefaultLogger-System-Action{System-String,System-String,System-DateTime}- 'Shield.Client.Extensions.ServerSentEvents.SetDefaultLogger(System.Action{System.String,System.String,System.DateTime})')
   - [Stop()](#M-Shield-Client-Extensions-ServerSentEvents-Stop 'Shield.Client.Extensions.ServerSentEvents.Stop')
 - [ShieldApplication](#T-Shield-Client-ShieldApplication 'Shield.Client.ShieldApplication')
   - [DownloadApplication(downloadKey,format)](#M-Shield-Client-ShieldApplication-DownloadApplication-System-String,Shield-Client-Models-DownloadFormat- 'Shield.Client.ShieldApplication.DownloadApplication(System.String,Shield.Client.Models.DownloadFormat)')
@@ -32,20 +35,20 @@
 - [ShieldClient](#T-Shield-Client-ShieldClient 'Shield.Client.ShieldClient')
   - [CheckConnection(code)](#M-Shield-Client-ShieldClient-CheckConnection-System-Net-HttpStatusCode@- 'Shield.Client.ShieldClient.CheckConnection(System.Net.HttpStatusCode@)')
 - [ShieldConnector](#T-Shield-Client-ShieldConnector 'Shield.Client.ShieldConnector')
-  - [CreateSseConnection()](#M-Shield-Client-ShieldConnector-CreateSseConnection 'Shield.Client.ShieldConnector.CreateSseConnection')
-  - [CreateSseConnection(taskId)](#M-Shield-Client-ShieldConnector-CreateSseConnection-System-String- 'Shield.Client.ShieldConnector.CreateSseConnection(System.String)')
   - [InstanceAndStartConnector(externalConnection,started)](#M-Shield-Client-ShieldConnector-InstanceAndStartConnector-Shield-Client-Models-HubConnectionExternalModel,Shield-Client-StartedConnection@- 'Shield.Client.ShieldConnector.InstanceAndStartConnector(Shield.Client.Models.HubConnectionExternalModel,Shield.Client.StartedConnection@)')
   - [InstanceAndStartHubConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceAndStartHubConnectorWithLogger-Shield-Client-Models-HubConnectionExternalModel,Shield-Client-StartedConnection@- 'Shield.Client.ShieldConnector.InstanceAndStartHubConnectorWithLogger(Shield.Client.Models.HubConnectionExternalModel,Shield.Client.StartedConnection@)')
   - [InstanceHubConnector(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceHubConnector-Shield-Client-Models-HubConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceHubConnector(Shield.Client.Models.HubConnectionExternalModel)')
   - [InstanceHubConnector(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceHubConnector-Shield-Client-Models-HubConnectionExternalModel,System-Boolean- 'Shield.Client.ShieldConnector.InstanceHubConnector(Shield.Client.Models.HubConnectionExternalModel,System.Boolean)')
   - [InstanceHubConnectorAsync(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceHubConnectorAsync-Shield-Client-Models-HubConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceHubConnectorAsync(Shield.Client.Models.HubConnectionExternalModel)')
-  - [InstanceHubConnectorAsync(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceHubConnectorAsync-Shield-Client-Models-HubConnectionExternalModel,System-Boolean- 'Shield.Client.ShieldConnector.InstanceHubConnectorAsync(Shield.Client.Models.HubConnectionExternalModel,System.Boolean)')
+  - [InstanceHubConnectorAsync(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceHubConnectorAsync-Shield-Client-Models-HubConnectionExternalModel,System-Boolean- 'Shield.Client.ShieldConnector.InstanceHubConnectorAsync(Shield.Client.Models.HubConnectionExternalModel,System.Boolean)')
   - [InstanceHubConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceHubConnectorWithLogger-Shield-Client-Models-HubConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceHubConnectorWithLogger(Shield.Client.Models.HubConnectionExternalModel)')
   - [InstanceHubConnectorWithLoggerAsync(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceHubConnectorWithLoggerAsync-Shield-Client-Models-HubConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceHubConnectorWithLoggerAsync(Shield.Client.Models.HubConnectionExternalModel)')
   - [InstanceQueueConnector(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceQueueConnector-Shield-Client-Models-QueueConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceQueueConnector(Shield.Client.Models.QueueConnectionExternalModel)')
   - [InstanceQueueConnector(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceQueueConnector-Shield-Client-Models-QueueConnectionExternalModel,System-Boolean- 'Shield.Client.ShieldConnector.InstanceQueueConnector(Shield.Client.Models.QueueConnectionExternalModel,System.Boolean)')
   - [InstanceQueueConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceQueueConnectorWithLogger-Shield-Client-Models-QueueConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceQueueConnectorWithLogger(Shield.Client.Models.QueueConnectionExternalModel)')
-  - [InstanceSseConnector(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceSseConnector-Shield-Client-Models-ServerSentEventConnectionExternalModel,System-Boolean- 'Shield.Client.ShieldConnector.InstanceSseConnector(Shield.Client.Models.ServerSentEventConnectionExternalModel,System.Boolean)')
+  - [InstanceSseConnector(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceSseConnector 'Shield.Client.ShieldConnector.InstanceSseConnector')
+  - [InstanceSseConnector(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceSseConnector-System-Boolean- 'Shield.Client.ShieldConnector.InstanceSseConnector(System.Boolean)')
+  - [InstanceSseConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceSseConnectorWithLogger 'Shield.Client.ShieldConnector.InstanceSseConnectorWithLogger')
 - [ShieldFile](#T-Shield-Client-Models-ShieldFile 'Shield.Client.Models.ShieldFile')
 - [ShieldProject](#T-Shield-Client-ShieldProject 'Shield.Client.ShieldProject')
   - [FindByIdOrCreateExternalProject(projectName,projectKey)](#M-Shield-Client-ShieldProject-FindByIdOrCreateExternalProject-System-String,System-String- 'Shield.Client.ShieldProject.FindByIdOrCreateExternalProject(System.String,System.String)')
@@ -268,8 +271,8 @@ Shield.Client.Extensions
 
 
 
-<a name='M-Shield-Client-Extensions-ServerSentEvents-#ctor-Shield-Client-Models-ServerSentEventConnectionExternalModel,System-String-'></a>
-### #ctor(connectionData,url) `constructor`
+<a name='M-Shield-Client-Extensions-ServerSentEvents-#ctor-System-String,System-String,System-String-'></a>
+### #ctor(authToken,version,baseUrl) `constructor`
 
 ##### Summary
 
@@ -279,8 +282,23 @@ Shield.Client.Extensions
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| connectionData | [Shield.Client.Models.ServerSentEventConnectionExternalModel](#T-Shield-Client-Models-ServerSentEventConnectionExternalModel 'Shield.Client.Models.ServerSentEventConnectionExternalModel') |  |
-| url | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| authToken | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| version | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| baseUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+
+<a name='P-Shield-Client-Extensions-ServerSentEvents-OnClosed'></a>
+### OnClosed `property`
+
+##### Summary
+
+
+
+<a name='P-Shield-Client-Extensions-ServerSentEvents-OnConnected'></a>
+### OnConnected `property`
+
+##### Summary
+
+
 
 <a name='M-Shield-Client-Extensions-ServerSentEvents-Destroy-System-String-'></a>
 ### Destroy(method) `method`
@@ -309,8 +327,8 @@ Shield.Client.Extensions
 | method | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 | action | [System.Action{System.String,System.String,System.DateTime}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Action 'System.Action{System.String,System.String,System.DateTime}') |  |
 
-<a name='M-Shield-Client-Extensions-ServerSentEvents-Start'></a>
-### Start() `method`
+<a name='M-Shield-Client-Extensions-ServerSentEvents-ProtectSingleFile-System-String,System-String,Shield-Client-Models-API-Application-ApplicationConfigurationDto-'></a>
+### ProtectSingleFile() `method`
 
 ##### Summary
 
@@ -320,8 +338,8 @@ Shield.Client.Extensions
 
 This method has no parameters.
 
-<a name='M-Shield-Client-Extensions-ServerSentEvents-StartAsync'></a>
-### StartAsync() `method`
+<a name='M-Shield-Client-Extensions-ServerSentEvents-ProtectSingleFileAsync-System-String,System-String,Shield-Client-Models-API-Application-ApplicationConfigurationDto-'></a>
+### ProtectSingleFileAsync(projectKey,fileBlob,configuration) `method`
 
 ##### Summary
 
@@ -329,7 +347,24 @@ This method has no parameters.
 
 ##### Parameters
 
-This method has no parameters.
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| projectKey | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| fileBlob | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
+| configuration | [Shield.Client.Models.API.Application.ApplicationConfigurationDto](#T-Shield-Client-Models-API-Application-ApplicationConfigurationDto 'Shield.Client.Models.API.Application.ApplicationConfigurationDto') |  |
+
+<a name='M-Shield-Client-Extensions-ServerSentEvents-SetDefaultLogger-System-Action{System-String,System-String,System-DateTime}-'></a>
+### SetDefaultLogger(action) `method`
+
+##### Summary
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| action | [System.Action{System.String,System.String,System.DateTime}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Action 'System.Action{System.String,System.String,System.DateTime}') |  |
 
 <a name='M-Shield-Client-Extensions-ServerSentEvents-Stop'></a>
 ### Stop() `method`
@@ -492,38 +527,6 @@ Check if current client has connection to the API.
 
 Shield.Client
 
-<a name='M-Shield-Client-ShieldConnector-CreateSseConnection'></a>
-### CreateSseConnection() `method`
-
-##### Summary
-
-
-
-##### Returns
-
-
-
-##### Parameters
-
-This method has no parameters.
-
-<a name='M-Shield-Client-ShieldConnector-CreateSseConnection-System-String-'></a>
-### CreateSseConnection(taskId) `method`
-
-##### Summary
-
-
-
-##### Returns
-
-
-
-##### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| taskId | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
-
 <a name='M-Shield-Client-ShieldConnector-InstanceAndStartConnector-Shield-Client-Models-HubConnectionExternalModel,Shield-Client-StartedConnection@-'></a>
 ### InstanceAndStartConnector(externalConnection,started) `method`
 
@@ -612,11 +615,11 @@ Build a connection to the shield hub for the current protection process async.
 | externalConnection | [Shield.Client.Models.HubConnectionExternalModel](#T-Shield-Client-Models-HubConnectionExternalModel 'Shield.Client.Models.HubConnectionExternalModel') |  |
 
 <a name='M-Shield-Client-ShieldConnector-InstanceHubConnectorAsync-Shield-Client-Models-HubConnectionExternalModel,System-Boolean-'></a>
-### InstanceHubConnectorAsync(externalConnection,withLogger) `method`
+### InstanceHubConnectorAsync(externalConnection) `method`
 
 ##### Summary
 
-Build a connection to the shield hub for the current protection process async.
+Build a Started Connection with the hub of the current process to handle the service from .NET Framework applications with current logger. //TODO: DOC!!!
 
 ##### Returns
 
@@ -627,7 +630,6 @@ Build a connection to the shield hub for the current protection process async.
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | externalConnection | [Shield.Client.Models.HubConnectionExternalModel](#T-Shield-Client-Models-HubConnectionExternalModel 'Shield.Client.Models.HubConnectionExternalModel') |  |
-| withLogger | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') |  |
 
 <a name='M-Shield-Client-ShieldConnector-InstanceHubConnectorWithLogger-Shield-Client-Models-HubConnectionExternalModel-'></a>
 ### InstanceHubConnectorWithLogger(externalConnection) `method`
@@ -715,7 +717,24 @@ Build a connection to the shield bus for the current protection process with cur
 | ---- | ---- | ----------- |
 | externalConnection | [Shield.Client.Models.QueueConnectionExternalModel](#T-Shield-Client-Models-QueueConnectionExternalModel 'Shield.Client.Models.QueueConnectionExternalModel') |  |
 
-<a name='M-Shield-Client-ShieldConnector-InstanceSseConnector-Shield-Client-Models-ServerSentEventConnectionExternalModel,System-Boolean-'></a>
+<a name='M-Shield-Client-ShieldConnector-InstanceSseConnector'></a>
+### InstanceSseConnector(externalConnection) `method`
+
+##### Summary
+
+Build a connection to the shield bus for the current protection process. //TODO: DOC!!
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| externalConnection | [M:Shield.Client.ShieldConnector.InstanceSseConnector](#T-M-Shield-Client-ShieldConnector-InstanceSseConnector 'M:Shield.Client.ShieldConnector.InstanceSseConnector') |  |
+
+<a name='M-Shield-Client-ShieldConnector-InstanceSseConnector-System-Boolean-'></a>
 ### InstanceSseConnector(externalConnection,withLogger) `method`
 
 ##### Summary
@@ -730,8 +749,24 @@ Build a connection to the shield bus for the current protection process with cur
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| externalConnection | [Shield.Client.Models.ServerSentEventConnectionExternalModel](#T-Shield-Client-Models-ServerSentEventConnectionExternalModel 'Shield.Client.Models.ServerSentEventConnectionExternalModel') |  |
-| withLogger | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') |  |
+| externalConnection | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') |  |
+
+<a name='M-Shield-Client-ShieldConnector-InstanceSseConnectorWithLogger'></a>
+### InstanceSseConnectorWithLogger(externalConnection) `method`
+
+##### Summary
+
+Build a connection to the shield bus for the current protection process with current logger. //TODO: DOC!!
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| externalConnection | [M:Shield.Client.ShieldConnector.InstanceSseConnectorWithLogger](#T-M-Shield-Client-ShieldConnector-InstanceSseConnectorWithLogger 'M:Shield.Client.ShieldConnector.InstanceSseConnectorWithLogger') |  |
 
 <a name='T-Shield-Client-Models-ShieldFile'></a>
 ## ShieldFile `type`

@@ -16,22 +16,26 @@ namespace Shield.Client
     {
         private readonly RestClient _client;
         public ShieldClient Parent { get; set; }
+        private readonly string _bearerToken, _apiVersion, _originalBaseUrl;
 
-        public ShieldConnector(IRestClient client, ShieldClient parent)
+        public ShieldConnector(IRestClient client, ShieldClient parent, string bearerToken, string apiVersion)
         {
             _client = new RestClient(client.BaseUrl ?? throw new InvalidOperationException()) {Authenticator = client.Authenticator, Timeout = 1000 * 60 * 10};
+            _originalBaseUrl = client.BaseUrl.AbsoluteUri;
             //Not required version for logger (Only in dev).
             if (!client.BaseUrl.ToString().ToLower().StartsWith("https://api.dotnetsafer.com"))
                 _client.BaseUrl = new Uri(_client.BaseUrl?.AbsoluteUri.Replace(_client.BaseUrl.PathAndQuery,null) ?? throw new InvalidOperationException());
             Parent = parent;
+            _bearerToken = bearerToken;
+            _apiVersion = apiVersion;
         }
-        public static ShieldConnector CreateInstance(RestClient client)
+        public static ShieldConnector CreateInstance(RestClient client, string bearerToken, string apiVersion)
         {
-            return new ShieldConnector(client, null);
+            return new ShieldConnector(client, null, bearerToken, apiVersion);
         }
-        public static ShieldConnector CreateInstance(RestClient client, ShieldClient parent)
+        public static ShieldConnector CreateInstance(RestClient client, ShieldClient parent, string bearerToken, string apiVersion)
         {
-            return new ShieldConnector(client, parent);
+            return new ShieldConnector(client, parent, bearerToken, apiVersion);
         }
         public QueueConnectionExternalModel CreateQueueConnection()
         {
@@ -40,23 +44,6 @@ namespace Shield.Client
         public QueueConnectionExternalModel CreateQueueConnection(string taskId)
         {
             return new QueueConnectionExternalModel { TaskId = taskId, OnLogger = Guid.NewGuid().ToString() };
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ServerSentEventConnectionExternalModel CreateSseConnection()
-        {
-            return CreateSseConnection(Guid.NewGuid().ToString());
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="taskId"></param>
-        /// <returns></returns>
-        public ServerSentEventConnectionExternalModel CreateSseConnection(string taskId)
-        {
-            return new ServerSentEventConnectionExternalModel { TaskId = taskId, OnLogger = Guid.NewGuid().ToString() };
         }
         public HubConnectionExternalModel CreateHubConnection()
         {
@@ -96,6 +83,13 @@ namespace Shield.Client
         public QueueConnection InstanceQueueConnector(QueueConnectionExternalModel externalConnection)
             => InstanceQueueConnector(externalConnection, false);
         /// <summary>
+        /// Build a connection to the shield bus for the current protection process. //TODO: DOC!!
+        /// </summary>
+        /// <param name="externalConnection"></param>
+        /// <returns></returns>
+        public ServerSentEvents InstanceSseConnector()
+            => InstanceSseConnector(false);
+        /// <summary>
         /// Build a connection to the shield hub for the current protection process with current logger async.
         /// </summary>
         /// <param name="externalConnection"></param>
@@ -116,6 +110,13 @@ namespace Shield.Client
         /// <returns></returns>
         public QueueConnection InstanceQueueConnectorWithLogger(QueueConnectionExternalModel externalConnection)
             => InstanceQueueConnector(externalConnection, true);
+        /// <summary>
+        /// Build a connection to the shield bus for the current protection process with current logger. //TODO: DOC!!
+        /// </summary>
+        /// <param name="externalConnection"></param>
+        /// <returns></returns>
+        public ServerSentEvents InstanceSseConnectorWithLogger()
+            => InstanceSseConnector(true);
         /// <summary>
         /// Build a Started Connection with the hub of the current process to handle the service from .NET Framework applications with current logger.
         /// </summary>
@@ -166,10 +167,9 @@ namespace Shield.Client
             }
         }
         /// <summary>
-        /// Build a connection to the shield hub for the current protection process async.
+        /// Build a Started Connection with the hub of the current process to handle the service from .NET Framework applications with current logger. //TODO: DOC!!!
         /// </summary>
         /// <param name="externalConnection"></param>
-        /// <param name="withLogger"></param>
         /// <returns></returns>
         private async Task<HubConnection> InstanceHubConnectorAsync(HubConnectionExternalModel externalConnection, bool withLogger)
         {
@@ -304,11 +304,11 @@ namespace Shield.Client
         /// <param name="externalConnection"></param>
         /// <param name="withLogger"></param>
         /// <returns></returns>
-        public ServerSentEvents InstanceSseConnector(ServerSentEventConnectionExternalModel externalConnection, bool withLogger)
+        private ServerSentEvents InstanceSseConnector(bool withLogger)
         {
             try
             {
-                var connection = new ServerSentEvents(externalConnection, "https://localhost:44395/api/events/suscribe");
+                var connection = new ServerSentEvents(_bearerToken, _apiVersion, _originalBaseUrl);
                  
                 if (!withLogger) return connection;
 
@@ -317,7 +317,7 @@ namespace Shield.Client
 
                 Parent.CustomLogger?.LogDebug("The current logger has been configured as the output of the connection logs.");
 
-                connection.On(externalConnection.OnLogger, (message, level, time) => OnCustomLog(time.ToString(CultureInfo.InvariantCulture), message, level));
+                connection.SetDefaultLogger((message, level, time) => OnCustomLog(time.ToString(CultureInfo.InvariantCulture), message, level));
 
                 return connection;
 

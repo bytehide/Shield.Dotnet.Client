@@ -45,7 +45,7 @@ namespace Shield.Client
             QueueConnectionExternalModel queueConnection, ApplicationConfigurationDto configuration, string queueMethod)
             => ProtectSingleFile(projectKey, fileBlob, queueConnection.TaskId, configuration, queueMethod);
 
-        public async Task<ProtectionResult> ProtectSingleFileAsync(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration, string queueMethod = null)
+        public async Task<ProtectionResult> ProtectSingleFileAsync(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration, string queueMethod = null, string sseMethod = null)
         {
             try
             {
@@ -62,6 +62,12 @@ namespace Shield.Client
                 {
                     request.AddQueryParameter("useQueues", "true");
                     request.AddQueryParameter("onLoggerQueue", queueMethod);
+                }
+
+                if (!string.IsNullOrEmpty(sseMethod))
+                {
+                    request.AddQueryParameter("useSse", "true");
+                    request.AddQueryParameter("onLoggerSse", sseMethod);
                 }
 
 
@@ -100,7 +106,7 @@ namespace Shield.Client
 
 
 
-        public ProtectionResult ProtectSingleFile(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration, string queueMethod = null)
+        public ProtectionResult ProtectSingleFile(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration, string queueMethod = null, string sseMethod = null)
         {
             try
             {
@@ -117,6 +123,12 @@ namespace Shield.Client
                 {
                     request.AddQueryParameter("useQueues", "true");
                     request.AddQueryParameter("onLoggerQueue", queueMethod);
+                }
+
+                if (!string.IsNullOrEmpty(sseMethod))
+                {
+                    request.AddQueryParameter("useSse", "true");
+                    request.AddQueryParameter("onLoggerSse", sseMethod);
                 }
 
 

@@ -6,8 +6,8 @@ namespace Shield.Client.Models
 {
     public class ServerSentEventsLogMessageModel
     {
-        public string Method { get; set; }
-        public DateTime Time { get; set; }
+        public string Id { get; set; }
+        public string Time { get; set; }
         public string LogLevelString { get; set; }
         public string Message { get; set; }
     }
