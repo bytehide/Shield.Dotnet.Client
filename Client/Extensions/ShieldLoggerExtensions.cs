@@ -36,16 +36,5 @@ namespace Shield.Client.Extensions
 
         public static void OnLog(this QueueConnection connection, string id, Action<string, string, string> action)
             => connection.On(id, (message, level, time) => action(time.ToString(CultureInfo.InvariantCulture), message, level));
-
-
-        public static void OnSuccess(this ServerSentEvents connection, Action<ProtectedApplicationDto> action)
-            => connection.On("onSuccess", (message, level, time) => action(JsonSerializer.Deserialize<ProtectedApplicationDto>(message)));
-        public static void OnError(this ServerSentEvents connection, Action<string> action)
-            => connection.On("onError", (message, level, time) => action(message));
-        public static void OnClose(this ServerSentEvents connection, Action<string> action)
-            => connection.On("onClose", (message, level, time) => action(message));
-
-        public static void OnLog(this ServerSentEvents connection, string id, Action<string, string, string> action)
-            => connection.On(id, (message, level, time) => action(time.ToString(CultureInfo.InvariantCulture), message, level));
     }
 }
