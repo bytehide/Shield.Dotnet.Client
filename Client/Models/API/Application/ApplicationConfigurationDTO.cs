@@ -4,6 +4,7 @@ namespace Shield.Client.Models.API.Application
 {
     public class ApplicationConfigurationDto
     {
+       
         public bool InheritFromProject { get; set; }
         public string ProjectPreset { get; set; }
         

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Shield.Client.Models
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ServerSentEventsLogMessageModel
     {
         public string Id { get; set; }

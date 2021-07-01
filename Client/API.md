@@ -17,14 +17,18 @@
   - [TryGetMimeType(str,mimeType)](#M-Shield-Client-Helpers-MimeTypeMap-TryGetMimeType-System-String,System-String@- 'Shield.Client.Helpers.MimeTypeMap.TryGetMimeType(System.String,System.String@)')
 - [ServerSentEvents](#T-Shield-Client-Extensions-ServerSentEvents 'Shield.Client.Extensions.ServerSentEvents')
   - [#ctor(authToken,version,baseUrl)](#M-Shield-Client-Extensions-ServerSentEvents-#ctor-System-String,System-String,System-String- 'Shield.Client.Extensions.ServerSentEvents.#ctor(System.String,System.String,System.String)')
-  - [OnClosed](#P-Shield-Client-Extensions-ServerSentEvents-OnClosed 'Shield.Client.Extensions.ServerSentEvents.OnClosed')
+  - [AfterDisconnect](#P-Shield-Client-Extensions-ServerSentEvents-AfterDisconnect 'Shield.Client.Extensions.ServerSentEvents.AfterDisconnect')
+  - [BeforeConnect](#P-Shield-Client-Extensions-ServerSentEvents-BeforeConnect 'Shield.Client.Extensions.ServerSentEvents.BeforeConnect')
+  - [BeforeDisconnect](#P-Shield-Client-Extensions-ServerSentEvents-BeforeDisconnect 'Shield.Client.Extensions.ServerSentEvents.BeforeDisconnect')
   - [OnConnected](#P-Shield-Client-Extensions-ServerSentEvents-OnConnected 'Shield.Client.Extensions.ServerSentEvents.OnConnected')
+  - [OnDisconnect](#P-Shield-Client-Extensions-ServerSentEvents-OnDisconnect 'Shield.Client.Extensions.ServerSentEvents.OnDisconnect')
   - [Destroy(method)](#M-Shield-Client-Extensions-ServerSentEvents-Destroy-System-String- 'Shield.Client.Extensions.ServerSentEvents.Destroy(System.String)')
   - [On(method,action)](#M-Shield-Client-Extensions-ServerSentEvents-On-System-String,System-Action{System-String,System-String,System-DateTime}- 'Shield.Client.Extensions.ServerSentEvents.On(System.String,System.Action{System.String,System.String,System.DateTime})')
   - [ProtectSingleFile()](#M-Shield-Client-Extensions-ServerSentEvents-ProtectSingleFile-System-String,System-String,Shield-Client-Models-API-Application-ApplicationConfigurationDto- 'Shield.Client.Extensions.ServerSentEvents.ProtectSingleFile(System.String,System.String,Shield.Client.Models.API.Application.ApplicationConfigurationDto)')
   - [ProtectSingleFileAsync(projectKey,fileBlob,configuration)](#M-Shield-Client-Extensions-ServerSentEvents-ProtectSingleFileAsync-System-String,System-String,Shield-Client-Models-API-Application-ApplicationConfigurationDto- 'Shield.Client.Extensions.ServerSentEvents.ProtectSingleFileAsync(System.String,System.String,Shield.Client.Models.API.Application.ApplicationConfigurationDto)')
   - [SetDefaultLogger(action)](#M-Shield-Client-Extensions-ServerSentEvents-SetDefaultLogger-System-Action{System-String,System-String,System-DateTime}- 'Shield.Client.Extensions.ServerSentEvents.SetDefaultLogger(System.Action{System.String,System.String,System.DateTime})')
   - [Stop()](#M-Shield-Client-Extensions-ServerSentEvents-Stop 'Shield.Client.Extensions.ServerSentEvents.Stop')
+- [ServerSentEventsLogMessageModel](#T-Shield-Client-Models-ServerSentEventsLogMessageModel 'Shield.Client.Models.ServerSentEventsLogMessageModel')
 - [ShieldApplication](#T-Shield-Client-ShieldApplication 'Shield.Client.ShieldApplication')
   - [DownloadApplication(downloadKey,format)](#M-Shield-Client-ShieldApplication-DownloadApplication-System-String,Shield-Client-Models-DownloadFormat- 'Shield.Client.ShieldApplication.DownloadApplication(System.String,Shield.Client.Models.DownloadFormat)')
   - [DownloadApplicationAsync(downloadKey,format)](#M-Shield-Client-ShieldApplication-DownloadApplicationAsync-System-String,Shield-Client-Models-DownloadFormat- 'Shield.Client.ShieldApplication.DownloadApplicationAsync(System.String,Shield.Client.Models.DownloadFormat)')
@@ -50,6 +54,8 @@
   - [InstanceSseConnector(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceSseConnector-System-Boolean- 'Shield.Client.ShieldConnector.InstanceSseConnector(System.Boolean)')
   - [InstanceSseConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceSseConnectorWithLogger 'Shield.Client.ShieldConnector.InstanceSseConnectorWithLogger')
 - [ShieldFile](#T-Shield-Client-Models-ShieldFile 'Shield.Client.Models.ShieldFile')
+- [ShieldInitException](#T-Shield-Client-Helpers-ShieldInitException 'Shield.Client.Helpers.ShieldInitException')
+  - [#ctor(message)](#M-Shield-Client-Helpers-ShieldInitException-#ctor-System-String- 'Shield.Client.Helpers.ShieldInitException.#ctor(System.String)')
 - [ShieldProject](#T-Shield-Client-ShieldProject 'Shield.Client.ShieldProject')
   - [FindByIdOrCreateExternalProject(projectName,projectKey)](#M-Shield-Client-ShieldProject-FindByIdOrCreateExternalProject-System-String,System-String- 'Shield.Client.ShieldProject.FindByIdOrCreateExternalProject(System.String,System.String)')
   - [FindByIdOrCreateExternalProjectAsync(projectName,projectKey)](#M-Shield-Client-ShieldProject-FindByIdOrCreateExternalProjectAsync-System-String,System-String- 'Shield.Client.ShieldProject.FindByIdOrCreateExternalProjectAsync(System.String,System.String)')
@@ -286,8 +292,22 @@ Shield.Client.Extensions
 | version | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 | baseUrl | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
-<a name='P-Shield-Client-Extensions-ServerSentEvents-OnClosed'></a>
-### OnClosed `property`
+<a name='P-Shield-Client-Extensions-ServerSentEvents-AfterDisconnect'></a>
+### AfterDisconnect `property`
+
+##### Summary
+
+
+
+<a name='P-Shield-Client-Extensions-ServerSentEvents-BeforeConnect'></a>
+### BeforeConnect `property`
+
+##### Summary
+
+
+
+<a name='P-Shield-Client-Extensions-ServerSentEvents-BeforeDisconnect'></a>
+### BeforeDisconnect `property`
 
 ##### Summary
 
@@ -295,6 +315,13 @@ Shield.Client.Extensions
 
 <a name='P-Shield-Client-Extensions-ServerSentEvents-OnConnected'></a>
 ### OnConnected `property`
+
+##### Summary
+
+
+
+<a name='P-Shield-Client-Extensions-ServerSentEvents-OnDisconnect'></a>
+### OnDisconnect `property`
 
 ##### Summary
 
@@ -376,6 +403,17 @@ This method has no parameters.
 ##### Parameters
 
 This method has no parameters.
+
+<a name='T-Shield-Client-Models-ServerSentEventsLogMessageModel'></a>
+## ServerSentEventsLogMessageModel `type`
+
+##### Namespace
+
+Shield.Client.Models
+
+##### Summary
+
+
 
 <a name='T-Shield-Client-ShieldApplication'></a>
 ## ShieldApplication `type`
@@ -778,6 +816,30 @@ Shield.Client.Models
 ##### Summary
 
 Work-Standard model of custom file for shield.
+
+<a name='T-Shield-Client-Helpers-ShieldInitException'></a>
+## ShieldInitException `type`
+
+##### Namespace
+
+Shield.Client.Helpers
+
+##### Summary
+
+
+
+<a name='M-Shield-Client-Helpers-ShieldInitException-#ctor-System-String-'></a>
+### #ctor(message) `constructor`
+
+##### Summary
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| message | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') |  |
 
 <a name='T-Shield-Client-ShieldProject'></a>
 ## ShieldProject `type`
