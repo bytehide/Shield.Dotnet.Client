@@ -283,12 +283,11 @@ namespace Shield.Client.Extensions
             if (close.Value is not null)
                 Methods.Add(updates.onClose, close.Value);
 
-            if (close.Value is not null)
-                InternalEvents.Add(updates.onClose, delegate
-                {
-                    BeforeDisconnect?.Invoke();
-                    OnDisconnect?.Invoke();
-                });
+            
+            InternalEvents.Add(updates.onClose, delegate { 
+                BeforeDisconnect?.Invoke(); 
+                OnDisconnect?.Invoke();
+            });
         }
 
         private void ParseInitError(string error)
