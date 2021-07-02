@@ -65,6 +65,7 @@
   - [GetProtections(projectKey)](#M-Shield-Client-ShieldProtections-GetProtections-System-String- 'Shield.Client.ShieldProtections.GetProtections(System.String)')
   - [GetProtectionsAsync(projectKey)](#M-Shield-Client-ShieldProtections-GetProtectionsAsync-System-String- 'Shield.Client.ShieldProtections.GetProtectionsAsync(System.String)')
 - [ShieldTasks](#T-Shield-Client-ShieldTasks 'Shield.Client.ShieldTasks')
+- [SseLoggerExtensions](#T-Shield-Client-Extensions-SseLoggerExtensions 'Shield.Client.Extensions.SseLoggerExtensions')
 - [StartedConnection](#T-Shield-Client-StartedConnection 'Shield.Client.StartedConnection')
 
 <a name='T-Shield-Client-Helpers-DependenciesHelper'></a>
@@ -965,6 +966,17 @@ Gets available protections of a project with his key async.
 ##### Namespace
 
 Shield.Client
+
+##### Summary
+
+
+
+<a name='T-Shield-Client-Extensions-SseLoggerExtensions'></a>
+## SseLoggerExtensions `type`
+
+##### Namespace
+
+Shield.Client.Extensions
 
 ##### Summary
 

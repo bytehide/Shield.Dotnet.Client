@@ -8,7 +8,6 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using ServiceStack;
 using Shield.Client.Helpers;
 using Shield.Client.Models;
 using Shield.Client.Models.API.Application;
@@ -101,7 +100,8 @@ namespace Shield.Client.Extensions
             }
 
             var request = WebRequest.Create(new Uri(taskUrl));
-            request.AddBearerToken(_bearerToken);
+            request.Headers["Authorization"] = $"Bearer {_bearerToken}";
+            //request.AddBearerToken(_bearerToken);
             request.Headers.Add("x-version", _apiVersion);
             ((HttpWebRequest)request).AllowReadStreamBuffering = false;
 
