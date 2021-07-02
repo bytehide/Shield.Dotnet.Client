@@ -4,11 +4,14 @@ using RestSharp;
 using RestSharp.Authenticators;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Shield.Client.Models;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Shield.Client
 {
     public class ShieldClient
     {
+        private readonly string _defaultHost = "https://api.dotnetsafer.com/api";
 
         public ShieldProject Project { get; set; }
         public ShieldApplication Application { get; set; }
@@ -47,27 +50,43 @@ namespace Shield.Client
 
             CustomLogger = customLogger;
 
-            Client = new RestClient(ClientConfiguration["url"])
+            //Dotnetsafer Client
+            Client = new RestClient(ClientConfiguration["url"] ?? _defaultHost)
             {
                 Authenticator = new JwtAuthenticator(apiToken), Timeout = 1000 * 60 * 10
             };
 
-            Client.AddDefaultHeader("x-version", ClientConfiguration["version"] ?? apiVersion);
+            var authRequest = new RestRequest("auth/service/shield");
 
-            var checkToken = new RestRequest("authorization/check");
-
-            var result = Client.Execute(checkToken, Method.GET);
-
-            if (result.StatusCode is HttpStatusCode.Unauthorized or 0)
-            {
+            var isShieldAuth = Client.Execute<ShieldAuthModel>(authRequest, Method.GET);
+            
+            if (isShieldAuth.Data is null || isShieldAuth.StatusCode is HttpStatusCode.Unauthorized or 0 or HttpStatusCode.Forbidden || !isShieldAuth.IsSuccessful) {
                 customLogger?.LogCritical("The api token provided is invalid, the client cannot be started.");
                 throw new Exception("The authorization is not correct, check the api token used or log in to your account to generate a new one.");
             }
 
+            //Dotnetsafer Shield Secure Client
+            Client = new RestClient(isShieldAuth.Data.Host)
+            {
+                Authenticator = new JwtAuthenticator(isShieldAuth.Data.Token), Timeout = 1000 * 60 * 10
+            };
+
+            Client.AddDefaultHeader("x-version", ClientConfiguration["version"] ?? apiVersion);
+
+            //var checkToken = new RestRequest("authorization/check");
+
+            //var result = Client.Execute(checkToken, Method.GET);
+
+            //if (result.StatusCode is HttpStatusCode.Unauthorized or 0)
+            //{
+            //    customLogger?.LogCritical("The api token provided is invalid, the client cannot be started.");
+            //    throw new Exception("The authorization is not correct, check the api token used or log in to your account to generate a new one.");
+            //}
+
             Project = ShieldProject.CreateInstance(Client, this);
             Application = ShieldApplication.CreateInstance(Client, this);
             Tasks = ShieldTasks.CreateInstance(Client, this);
-            Connector = ShieldConnector.CreateInstance(Client, this, apiToken, ClientConfiguration["version"] ?? apiVersion);
+            Connector = ShieldConnector.CreateInstance(Client, this, isShieldAuth.Data.Token, ClientConfiguration["version"] ?? apiVersion);
             Configuration = ShieldConfiguration.CreateInstance();
             Protections = ShieldProtections.CreateInstance(Client,this);
 
