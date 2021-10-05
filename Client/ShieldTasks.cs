@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using RestSharp;
+using Shield.Client.Extensions;
 using Shield.Client.Models;
 using Shield.Client.Models.API.Application;
 
@@ -52,7 +53,7 @@ namespace Shield.Client
                 Parent.CustomLogger?.LogDebug("Initiating the request to protect a single file.");
 
                 var request =
-                    new RestRequest("/protection/protect/single")
+                    new RestRequest("/protection/protect/single".ToApiRoute())
                         .AddQueryParameter("projectKey", projectKey)
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)
@@ -113,7 +114,7 @@ namespace Shield.Client
                 Parent.CustomLogger?.LogDebug("Initiating the request to protect a single file.");
 
                 var request =
-                    new RestRequest("/protection/protect/single")
+                    new RestRequest("/protection/protect/single".ToApiRoute())
                         .AddQueryParameter("projectKey", projectKey)
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)

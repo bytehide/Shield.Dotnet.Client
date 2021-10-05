@@ -91,7 +91,7 @@ namespace Shield.Client.Extensions
         {
             BeforeConnect?.Invoke();
 
-            var taskUrl = $"{_baseUrl}protection/protect/single/sse?projectKey={projectKey}&fileBlob={fileBlob}&onlLog={_defaultLoggerId}";
+            var taskUrl = $"{_baseUrl}api/protection/protect/single/sse?projectKey={projectKey}&fileBlob={fileBlob}&onlLog={_defaultLoggerId}";
 
             if (configuration is not null)
             {
@@ -157,7 +157,7 @@ namespace Shield.Client.Extensions
 
             BeforeConnect?.Invoke();
 
-            var taskUrl = $"{_baseUrl}protection/protect/single/sse?projectKey={projectKey}&fileBlob={fileBlob}&onlLog={_defaultLoggerId}";
+            var taskUrl = $"{_baseUrl}api/protection/protect/single/sse?projectKey={projectKey}&fileBlob={fileBlob}&onlLog={_defaultLoggerId}";
 
             if (configuration is not null)
             {

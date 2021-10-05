@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using RestSharp;
+using Shield.Client.Extensions;
 using Shield.Client.Models.API.Protections;
 
 namespace Shield.Client
@@ -39,7 +40,7 @@ namespace Shield.Client
                 Parent.CustomLogger?.LogDebug("Initiating the request to get project available protections.");
 
                 var request =
-                    new RestRequest("project/{projectKey}/protections/available/")
+                    new RestRequest("project/{projectKey}/protections/available/".ToApiRoute())
                         .AddUrlSegment("projectKey", projectKey);
 
                 var result =  _client.Get<List<ProtectionDto>>(request);
@@ -66,7 +67,7 @@ namespace Shield.Client
                 Parent.CustomLogger?.LogDebug("Initiating the request to get project available protections.");
 
                 var request =
-                    new RestRequest("project/{projectKey}/protections/available/")
+                    new RestRequest("project/{projectKey}/protections/available/".ToApiRoute())
                         .AddUrlSegment("projectKey", projectKey);
 
                 var result = await _client.GetAsync<List<ProtectionDto>>(request);

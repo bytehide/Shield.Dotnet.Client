@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using RestSharp;
+using Shield.Client.Extensions;
 using Shield.Client.Models.API.Project;
 
 namespace Shield.Client
@@ -9,6 +10,7 @@ namespace Shield.Client
     public class ShieldProject
     {
         private readonly RestClient _client;
+
         public ShieldClient Parent { get; set; }
 
         public ShieldProject(RestClient client, ShieldClient parent)
@@ -36,7 +38,7 @@ namespace Shield.Client
                 Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
 
                 var request =
-                    new RestRequest("/project/externalProject/{projectName}")
+                    new RestRequest("project/externalProject/{projectName}".ToApiRoute())
                         .AddUrlSegment("projectName", projectName);
 
                 var result = await _client.GetAsync<ProjectDto>(request);
@@ -63,7 +65,7 @@ namespace Shield.Client
                 Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
 
                 var request =
-                    new RestRequest("/project/externalProject/{projectName}")
+                    new RestRequest("/project/externalProject/{projectName}".ToApiRoute())
                         .AddUrlSegment("projectName", projectName);
 
                 var result = _client.Get<ProjectDto>(request);
@@ -94,7 +96,7 @@ namespace Shield.Client
                 Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
 
                 var request =
-                    new RestRequest("/project/externalProject/{projectName}")
+                    new RestRequest("/project/externalProject/{projectName}".ToApiRoute())
                         .AddUrlSegment("projectName", projectName)
                         .AddQueryParameter("projectKey", projectKey);
 
@@ -123,7 +125,7 @@ namespace Shield.Client
                 Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
 
                 var request =
-                    new RestRequest("/project/externalProject/{projectName}")
+                    new RestRequest("/project/externalProject/{projectName}".ToApiRoute())
                         .AddUrlSegment("projectName", projectName)
                         .AddQueryParameter("projectKey", projectKey);
 

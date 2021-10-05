@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using RestSharp;
+using Shield.Client.Extensions;
 using Shield.Client.Helpers;
 using Shield.Client.Models;
 using Shield.Client.Models.API.Application;
@@ -47,7 +48,7 @@ namespace Shield.Client
             {
                 Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
 
-                var request = new RestRequest("/app/direct")
+                var request = new RestRequest("/app/direct".ToApiRoute())
                     .AddJsonBody(projectKey)
                     .AddFile("file", file.FileContent, file.FileName, MimeTypeMap.GetMimeType(file.FileName))
                     .AddDependencies(dependencies?.Select(x => (x.FileContent, x.FileName)).ToList());
@@ -79,7 +80,7 @@ namespace Shield.Client
             {
                 Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
 
-                var request = new RestRequest("/app/direct")
+                var request = new RestRequest("/app/direct".ToApiRoute())
                     .AddJsonBody(projectKey)
                     .AddFile("file", file.FileContent, file.FileName, MimeTypeMap.GetMimeType(file.FileName))
                     .AddDependencies(dependencies?.Select(x => (x.FileContent, x.FileName)).ToList());
@@ -111,7 +112,7 @@ namespace Shield.Client
             {
                 Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
 
-                var request = new RestRequest("/app/direct")
+                var request = new RestRequest("/app/direct".ToApiRoute())
                     .AddQueryParameter("projectKey", projectKey)
                     .AddFileFromPath(filePath)
                     .AddDependencies(dependenciesPaths);
@@ -144,7 +145,7 @@ namespace Shield.Client
             {
                 Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
 
-                var request = new RestRequest("/app/direct")
+                var request = new RestRequest("/app/direct".ToApiRoute())
                     .AddQueryParameter("projectKey", projectKey)
                     .AddFileFromPath(filePath)
                     .AddDependencies(dependenciesPaths);
@@ -227,7 +228,7 @@ namespace Shield.Client
 
                 Parent.CustomLogger?.LogDebug("Initiating the request to download an application.");
                 using var stream = new MemoryStream();
-                var request = new RestRequest("/app/download")
+                var request = new RestRequest("/app/download".ToApiRoute())
                     {
                         ResponseWriter = async responseStream =>
                         {
@@ -271,7 +272,7 @@ namespace Shield.Client
 
                 Parent.CustomLogger?.LogDebug("Initiating the request to download an application.");
                 using var stream = new MemoryStream();
-                var request = new RestRequest("/app/download")
+                var request = new RestRequest("/app/download".ToApiRoute())
                     {
                         ResponseWriter = responseStream =>
                         {
