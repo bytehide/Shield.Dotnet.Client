@@ -13,8 +13,8 @@ namespace Shield.Client.Fr
         {
             return new ShieldConfiguration();
         }
-        public ProjectConfigurationDto MakeProjectConfiguration(ShieldConfigurationPresets.Presets preset)
-            => new ProjectConfigurationDto {ProjectPreset = preset.ToPresetString()};
+        public ProjectConfigurationDto MakeProjectConfiguration(ShieldConfigurationPresets.Presets preset, string overWriteEdition = null)
+            => new ProjectConfigurationDto {ProjectPreset = preset.ToPresetString(), OverwriteEdition = overWriteEdition};
 
         public ProjectConfigurationDto MakeProjectCustomConfiguration(params string[] protectionsId)
             => new ProjectConfigurationDto { ProjectPreset = "custom", Protections = protectionsId.ToList() };
@@ -22,8 +22,14 @@ namespace Shield.Client.Fr
         public ApplicationConfigurationDto MakeApplicationCustomConfiguration(params string[] protectionsId)
             => new ApplicationConfigurationDto { ProjectPreset = "custom", Protections = protectionsId.ToList(), InheritFromProject = false};
 
-        public ApplicationConfigurationDto MakeApplicationConfiguration(ShieldConfigurationPresets.Presets preset)
-            => new ApplicationConfigurationDto { ProjectPreset = preset.ToPresetString(), InheritFromProject = false };
+        public ProjectConfigurationDto MakeProjectCustomConfiguration(string overWriteEdition, params string[] protectionsId)
+            => new ProjectConfigurationDto { ProjectPreset = "custom", Protections = protectionsId.ToList(), OverwriteEdition = overWriteEdition };
+
+        public ApplicationConfigurationDto MakeApplicationCustomConfiguration(string overWriteEdition, params string[] protectionsId)
+            => new ApplicationConfigurationDto { ProjectPreset = "custom", Protections = protectionsId.ToList(), InheritFromProject = false, OverwriteEdition = overWriteEdition };
+
+        public ApplicationConfigurationDto MakeApplicationConfiguration(ShieldConfigurationPresets.Presets preset, string overWriteEdition = null)
+            => new ApplicationConfigurationDto { ProjectPreset = preset.ToPresetString(), InheritFromProject = false, OverwriteEdition = overWriteEdition };
 
         //public async Task<ApplicationConfigurationDto> LoadApplicationConfigurationFromFileAsync(string path)
         //    => JsonConvert.DeserializeObject<ApplicationConfigurationDto>(await File.ReadAllTextAsync(path));
