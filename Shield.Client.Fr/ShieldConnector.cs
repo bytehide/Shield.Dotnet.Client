@@ -19,7 +19,7 @@ namespace Shield.Client.Fr
         {
             _client = new RestClient(client.BaseUrl ?? throw new InvalidOperationException()) {Authenticator = client.Authenticator};
             //Not required version for logger (Only in dev).
-            if (!client.BaseUrl.ToString().ToLower().StartsWith("https://api.dotnetsafer.com"))
+            if (!client.BaseUrl.ToString().ToLower().StartsWith("https://api.bytehide.com"))
                 _client.BaseUrl = new Uri(_client.BaseUrl?.AbsoluteUri.Replace(_client.BaseUrl.PathAndQuery,null) ?? throw new InvalidOperationException());
             Parent = parent;
         }

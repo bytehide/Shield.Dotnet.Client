@@ -109,7 +109,7 @@ namespace Shield.Client.Extensions
             
             var stream = response.GetResponseStream();
 
-            using var reader = new StreamReader(stream ?? throw new InvalidOperationException("Can't connect with Dotnetsafer Shield service"));
+            using var reader = new StreamReader(stream ?? throw new InvalidOperationException("Can't connect with Bytehide Shield service"));
 
             OnDisconnect = delegate
             {
@@ -165,7 +165,7 @@ namespace Shield.Client.Extensions
                 taskUrl += $"&applicationConfigurationDto={WebUtility.UrlEncode(jsonConfiguration)}";
             }
 
-            using var streamReader = new StreamReader(await _client.GetStreamAsync(taskUrl) ?? throw new InvalidOperationException("Can't connect with Dotnetsafer Shield service"));
+            using var streamReader = new StreamReader(await _client.GetStreamAsync(taskUrl) ?? throw new InvalidOperationException("Can't connect with Bytehide Shield service"));
 
             OnDisconnect = delegate
             {

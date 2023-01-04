@@ -12,7 +12,7 @@ namespace Shield.Client
 {
     public class ShieldClient
     {
-        private readonly string _defaultHost = "http://api.dotnetsafer.test/api"; //"https://api.dotnetsafer.com/api";
+        private readonly string _defaultHost = "https://api.bytehide.com/api";
 
         public ShieldProject Project { get; set; }
         public ShieldApplication Application { get; set; }
@@ -51,7 +51,7 @@ namespace Shield.Client
 
             CustomLogger = customLogger;
 
-            //Dotnetsafer Client
+            //Bytehide Client
             Client = new RestClient(ClientConfiguration["url"] ?? _defaultHost)
             {
                 Authenticator = new JwtAuthenticator(apiToken), Timeout = 1000 * 60 * 10
@@ -66,7 +66,7 @@ namespace Shield.Client
                 throw new Exception("The authorization is not correct, check the api token used or log in to your account to generate a new one.");
             }
 
-            //Dotnetsafer Shield Secure Client
+            //Bytehide Shield Secure Client
             Client = new RestClient(isShieldAuth.Data.Host)
             {
                 Authenticator = new JwtAuthenticator(isShieldAuth.Data.Token), Timeout = 1000 * 60 * 10
