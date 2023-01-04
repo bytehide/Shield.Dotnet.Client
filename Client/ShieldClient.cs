@@ -6,12 +6,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Shield.Client.Models;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using System.Threading.Tasks;
 
 namespace Shield.Client
 {
     public class ShieldClient
     {
-        private readonly string _defaultHost = "https://api.dotnetsafer.com/api";
+        private readonly string _defaultHost = "http://api.dotnetsafer.test/api"; //"https://api.dotnetsafer.com/api";
 
         public ShieldProject Project { get; set; }
         public ShieldApplication Application { get; set; }
@@ -99,13 +100,28 @@ namespace Shield.Client
         /// <returns></returns>
         public bool CheckConnection(out HttpStatusCode code)
         {
-            var checkToken = new RestRequest("authorization/check");
+            var checkToken = new RestRequest("api/authorization/check");
 
             var result = Client.Execute(checkToken, Method.GET);
 
             code = result.StatusCode;
 
             return code != HttpStatusCode.Unauthorized && code != 0;
+        }
+
+        public class AuthUserDto
+        {
+            public string Email { get; set; }
+            public string Edition { get; set; }
+        }
+
+        public AuthUserDto GetSession()
+        {
+            var checkToken = new RestRequest("api/authorization/session");
+
+            var result =  Client.Execute<AuthUserDto>(checkToken, Method.GET);
+
+            return result.Data;
         }
     }
 }
