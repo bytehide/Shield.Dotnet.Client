@@ -47,9 +47,6 @@
   - [InstanceHubConnectorAsync(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceHubConnectorAsync-Shield-Client-Models-HubConnectionExternalModel,System-Boolean- 'Shield.Client.ShieldConnector.InstanceHubConnectorAsync(Shield.Client.Models.HubConnectionExternalModel,System.Boolean)')
   - [InstanceHubConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceHubConnectorWithLogger-Shield-Client-Models-HubConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceHubConnectorWithLogger(Shield.Client.Models.HubConnectionExternalModel)')
   - [InstanceHubConnectorWithLoggerAsync(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceHubConnectorWithLoggerAsync-Shield-Client-Models-HubConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceHubConnectorWithLoggerAsync(Shield.Client.Models.HubConnectionExternalModel)')
-  - [InstanceQueueConnector(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceQueueConnector-Shield-Client-Models-QueueConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceQueueConnector(Shield.Client.Models.QueueConnectionExternalModel)')
-  - [InstanceQueueConnector(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceQueueConnector-Shield-Client-Models-QueueConnectionExternalModel,System-Boolean- 'Shield.Client.ShieldConnector.InstanceQueueConnector(Shield.Client.Models.QueueConnectionExternalModel,System.Boolean)')
-  - [InstanceQueueConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceQueueConnectorWithLogger-Shield-Client-Models-QueueConnectionExternalModel- 'Shield.Client.ShieldConnector.InstanceQueueConnectorWithLogger(Shield.Client.Models.QueueConnectionExternalModel)')
   - [InstanceSseConnector(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceSseConnector 'Shield.Client.ShieldConnector.InstanceSseConnector')
   - [InstanceSseConnector(externalConnection,withLogger)](#M-Shield-Client-ShieldConnector-InstanceSseConnector-System-Boolean- 'Shield.Client.ShieldConnector.InstanceSseConnector(System.Boolean)')
   - [InstanceSseConnectorWithLogger(externalConnection)](#M-Shield-Client-ShieldConnector-InstanceSseConnectorWithLogger 'Shield.Client.ShieldConnector.InstanceSseConnectorWithLogger')
@@ -703,58 +700,6 @@ Build a connection to the shield hub for the current protection process with cur
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | externalConnection | [Shield.Client.Models.HubConnectionExternalModel](#T-Shield-Client-Models-HubConnectionExternalModel 'Shield.Client.Models.HubConnectionExternalModel') |  |
-
-<a name='M-Shield-Client-ShieldConnector-InstanceQueueConnector-Shield-Client-Models-QueueConnectionExternalModel-'></a>
-### InstanceQueueConnector(externalConnection) `method`
-
-##### Summary
-
-Build a connection to the shield bus for the current protection process.
-
-##### Returns
-
-
-
-##### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| externalConnection | [Shield.Client.Models.QueueConnectionExternalModel](#T-Shield-Client-Models-QueueConnectionExternalModel 'Shield.Client.Models.QueueConnectionExternalModel') |  |
-
-<a name='M-Shield-Client-ShieldConnector-InstanceQueueConnector-Shield-Client-Models-QueueConnectionExternalModel,System-Boolean-'></a>
-### InstanceQueueConnector(externalConnection,withLogger) `method`
-
-##### Summary
-
-Build a connection to the shield queues service bus for the current protection process.
-
-##### Returns
-
-
-
-##### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| externalConnection | [Shield.Client.Models.QueueConnectionExternalModel](#T-Shield-Client-Models-QueueConnectionExternalModel 'Shield.Client.Models.QueueConnectionExternalModel') |  |
-| withLogger | [System.Boolean](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Boolean 'System.Boolean') |  |
-
-<a name='M-Shield-Client-ShieldConnector-InstanceQueueConnectorWithLogger-Shield-Client-Models-QueueConnectionExternalModel-'></a>
-### InstanceQueueConnectorWithLogger(externalConnection) `method`
-
-##### Summary
-
-Build a connection to the shield bus for the current protection process with current logger.
-
-##### Returns
-
-
-
-##### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| externalConnection | [Shield.Client.Models.QueueConnectionExternalModel](#T-Shield-Client-Models-QueueConnectionExternalModel 'Shield.Client.Models.QueueConnectionExternalModel') |  |
 
 <a name='M-Shield-Client-ShieldConnector-InstanceSseConnector'></a>
 ### InstanceSseConnector(externalConnection) `method`

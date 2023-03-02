@@ -1,6 +1,6 @@
 ﻿namespace Shield.Client.Models
 {
-    public class QueueConnectionExternalModel
+    public class HubConnectionExternalModel
     {
         public string TaskId { get; set; }
         public string OnLogger { get; set; }
