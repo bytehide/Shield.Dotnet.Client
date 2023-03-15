@@ -152,7 +152,7 @@ namespace Shield.Client.Extensions
         /// <param name="projectKey"></param>
         /// <param name="fileBlob"></param>
         /// <param name="configuration"></param>
-        public async Task ProtectSingleFileAsync(string projectKey, string fileBlob, ApplicationConfigurationDto configuration)
+        public async Task ProtectSingleFileAsync(string projectKey, string fileBlob, ProtectionConfigurationDTO configuration)
         {
 
             BeforeConnect?.Invoke();
@@ -212,6 +212,8 @@ namespace Shield.Client.Extensions
 
         private void ReceiverOnProcessMessage(string msg, string eventName = null)
         {
+            if (msg is not null && msg.StartsWith("data:"))
+                msg = msg.Remove(0, 5);
             try
             {
                 switch (msg)

@@ -22,7 +22,7 @@ namespace NetCore.Console.Example
             await using var serviceProvider = services.BuildServiceProvider();
             var app = serviceProvider.GetService<Consumer>();
             // ReSharper disable once PossibleNullReferenceException
-            await app.Run();
+            await app.RunWithSse();
         }
         private static void ConfigureServices(IServiceCollection services)
         {

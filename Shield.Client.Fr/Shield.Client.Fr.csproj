@@ -180,7 +180,6 @@
   <ItemGroup>
     <Compile Include="Extensions\ConfigurationExtensions.cs" />
     <Compile Include="Extensions\FileExtensions.cs" />
-    <Compile Include="Extensions\QueueConnection.cs" />
     <Compile Include="Extensions\ShieldLoggerExtensions.cs" />
     <Compile Include="Helpers\DependenciesHelper.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
@@ -213,8 +212,6 @@
     <Compile Include="Models\HubConnectionExternal.cs" />
     <Compile Include="Models\NegotiateModel.cs" />
     <Compile Include="Models\ProtectionResult.cs" />
-    <Compile Include="Models\QueueConnectionExternal.cs" />
-    <Compile Include="Models\QueueLogMessageModel.cs" />
     <Compile Include="Models\ShieldConfigurationPresets.cs" />
     <Compile Include="Models\ShieldFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

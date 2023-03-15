@@ -33,18 +33,11 @@ namespace Shield.Client.Fr
             HubConnectionExternalModel hubConnection, ApplicationConfigurationDto configuration)
             => await ProtectSingleFileAsync(projectKey, fileBlob, hubConnection.TaskId, configuration);
 
-        public async Task<ProtectionResult> ProtectSingleFileAsync(string projectKey, string fileBlob,
-            QueueConnectionExternalModel queueConnection, ApplicationConfigurationDto configuration, string queueMethod)
-            => await ProtectSingleFileAsync(projectKey, fileBlob, queueConnection.TaskId, configuration, queueMethod);
-
         public ProtectionResult ProtectSingleFile(string projectKey, string fileBlob,
             HubConnectionExternalModel hubConnection, ApplicationConfigurationDto configuration)
             => ProtectSingleFile(projectKey, fileBlob, hubConnection.TaskId, configuration);
 
-        public ProtectionResult ProtectSingleFile(string projectKey, string fileBlob,
-            QueueConnectionExternalModel queueConnection, ApplicationConfigurationDto configuration, string queueMethod)
-            => ProtectSingleFile(projectKey, fileBlob, queueConnection.TaskId, configuration, queueMethod);
-
+       
         public async Task<ProtectionResult> ProtectSingleFileAsync(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration, string queueMethod = null)
         {
             try

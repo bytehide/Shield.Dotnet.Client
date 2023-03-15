@@ -32,21 +32,13 @@ namespace Shield.Client
 
         public async Task<ProtectionResult> ProtectSingleFileAsync(string projectKey, string fileBlob,
             HubConnectionExternalModel hubConnection, ApplicationConfigurationDto configuration)
-            => await ProtectSingleFileAsync(projectKey, fileBlob, hubConnection.TaskId, configuration);
-
-        public async Task<ProtectionResult> ProtectSingleFileAsync(string projectKey, string fileBlob,
-            QueueConnectionExternalModel queueConnection, ApplicationConfigurationDto configuration, string queueMethod)
-            => await ProtectSingleFileAsync(projectKey, fileBlob, queueConnection.TaskId, configuration, queueMethod);
+            => await ProtectSingleFileWithSignalRAsync(projectKey, fileBlob, hubConnection.TaskId, configuration);
 
         public ProtectionResult ProtectSingleFile(string projectKey, string fileBlob,
             HubConnectionExternalModel hubConnection, ApplicationConfigurationDto configuration)
-            => ProtectSingleFile(projectKey, fileBlob, hubConnection.TaskId, configuration);
+            => ProtectSingleFileWithSignalR(projectKey, fileBlob, hubConnection.TaskId, configuration);
 
-        public ProtectionResult ProtectSingleFile(string projectKey, string fileBlob,
-            QueueConnectionExternalModel queueConnection, ApplicationConfigurationDto configuration, string queueMethod)
-            => ProtectSingleFile(projectKey, fileBlob, queueConnection.TaskId, configuration, queueMethod);
-
-        public async Task<ProtectionResult> ProtectSingleFileAsync(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration, string queueMethod = null, string sseMethod = null)
+        public async Task<ProtectionResult> ProtectSingleFileWithSignalRAsync(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration)
         {
             try
             {
@@ -58,22 +50,6 @@ namespace Shield.Client
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)
                         .AddJsonBody(configuration ?? new ApplicationConfigurationDto { InheritFromProject = true });
-
-                if (!string.IsNullOrEmpty(queueMethod))
-                {
-                    request.AddQueryParameter("useQueues", "true");
-                    request.AddQueryParameter("onLoggerQueue", queueMethod);
-                }
-
-                if (!string.IsNullOrEmpty(sseMethod))
-                {
-                    request.AddQueryParameter("useSse", "true");
-                    request.AddQueryParameter("onLoggerSse", sseMethod);
-                }
-
-
-
-                //var result = await _client.PostAsync<ProtectionResult>(request);
 
                 _client.ThrowOnDeserializationError = true;
 
@@ -104,10 +80,7 @@ namespace Shield.Client
         }
 
 
-
-
-
-        public ProtectionResult ProtectSingleFile(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration, string queueMethod = null, string sseMethod = null)
+        public ProtectionResult ProtectSingleFileWithSignalR(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration)
         {
             try
             {
@@ -119,19 +92,6 @@ namespace Shield.Client
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)
                         .AddJsonBody(configuration ?? new ApplicationConfigurationDto { InheritFromProject = true });
-
-                if (!string.IsNullOrEmpty(queueMethod))
-                {
-                    request.AddQueryParameter("useQueues", "true");
-                    request.AddQueryParameter("onLoggerQueue", queueMethod);
-                }
-
-                if (!string.IsNullOrEmpty(sseMethod))
-                {
-                    request.AddQueryParameter("useSse", "true");
-                    request.AddQueryParameter("onLoggerSse", sseMethod);
-                }
-
 
                 var result = _client.Post<ProtectionResult>(request);
 
