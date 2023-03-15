@@ -87,7 +87,7 @@ namespace Shield.Client.Extensions
         /// <summary>
         /// 
         /// </summary>
-        public void ProtectSingleFile(string projectKey, string fileBlob, ApplicationConfigurationDto configuration)
+        public void ProtectSingleFile(string projectKey, string fileBlob, ProtectionConfigurationDTO configuration)
         {
             BeforeConnect?.Invoke();
 
