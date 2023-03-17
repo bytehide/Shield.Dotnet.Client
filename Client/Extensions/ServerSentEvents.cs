@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Shield.Client.Helpers;
 using Shield.Client.Models;
-using Shield.Client.Models.API.Application;
+using Shield.Client.Models.API;
 
 namespace Shield.Client.Extensions
 {

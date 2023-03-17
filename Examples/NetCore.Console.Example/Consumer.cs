@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shield.Client;
 using Shield.Client.Extensions;
-using Shield.Client.Models.API.Application;
 using RestSharp.Serialization.Json;
+using Shield.Client.Models.API;
 
 namespace NetCore.Console.Example
 {
@@ -91,7 +91,7 @@ namespace NetCore.Console.Example
             var dependencies = Directory.GetFiles($"{directory}").ToList();
 
             var client = ShieldClient.CreateInstance(
-                "9K5elBOWEfe35gPB7Lg3IjKtHBrzYFwFzepo92ZJ"
+                "jPCY46K9cgdr9hpeI2AaBpVYNNcqcFOqmavf2FWN"
                 , _logger);
 
 
