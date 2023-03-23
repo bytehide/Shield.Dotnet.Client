@@ -101,12 +101,12 @@ namespace Shield.Client.Extensions
 
             var request = WebRequest.Create(new Uri(taskUrl));
             request.Headers["Authorization"] = $"Bearer {_bearerToken}";
-            //request.AddBearerToken(_bearerToken);
             request.Headers.Add("x-version", _apiVersion);
             ((HttpWebRequest)request).AllowReadStreamBuffering = false;
+            request.Timeout = Timeout.Infinite;
 
             var response = request.GetResponse();
-            
+
             var stream = response.GetResponseStream();
 
             using var reader = new StreamReader(stream ?? throw new InvalidOperationException("Can't connect with Dotnetsafer Shield service"));
@@ -145,6 +145,7 @@ namespace Shield.Client.Extensions
                 //ignored, OnDisconnect was fired
             }
         }
+        
 
         /// <summary>
         /// 
