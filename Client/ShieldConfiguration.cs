@@ -76,9 +76,13 @@ namespace Shield.Client
                 $"shield.{(string.IsNullOrEmpty(applicationName) ? "*" : applicationName)}.config.json",
                 SearchOption.AllDirectories).ToList();
 
-            if (filePaths.Count == 0)
-                filePaths = Directory.GetFiles(directory, $"shield.config.json",
+            var defaultFiles = Directory.GetFiles(directory, $"shield.config.json",
                 SearchOption.AllDirectories).ToList();
+
+            if (filePaths.Count == 0)
+                filePaths = defaultFiles;
+            else if (defaultFiles.Count > 0)
+                filePaths.AddRange(defaultFiles);
 
             if (filePaths.Count == 0)
                 return null;
@@ -98,6 +102,27 @@ namespace Shield.Client
             if (files is null)
                 return null;
             return LoadConfigurationFromFile(files.FirstOrDefault());
+        }
+
+        /// <summary>
+        /// Looks for all the configuration files in a directory
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <param name="applicationName"></param>
+        /// <returns></returns>
+        public List<ProtectionConfigurationDTO> FindConfigurations(string directory, string applicationName = "*")
+        {
+            var files = DiscoverFiles(directory, applicationName);
+            if (files is null)
+                return null;
+            var configurations = new List<ProtectionConfigurationDTO>();
+            foreach (var file in files)
+            {
+                var configuration = LoadConfigurationFromFile(file);
+                if (configuration is not null)
+                    configurations.Add(configuration);
+            }
+            return configurations;
         }
 
         /// <summary>
