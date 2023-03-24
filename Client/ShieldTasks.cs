@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using RestSharp;
 using Shield.Client.Extensions;
 using Shield.Client.Models;
-using Shield.Client.Models.API.Application;
+using Shield.Client.Models.API;
 
 namespace Shield.Client
 {
@@ -31,14 +31,14 @@ namespace Shield.Client
         }
 
         public async Task<ProtectionResult> ProtectSingleFileAsync(string projectKey, string fileBlob,
-            HubConnectionExternalModel hubConnection, ApplicationConfigurationDto configuration)
+            HubConnectionExternalModel hubConnection, ProtectionConfigurationDTO configuration)
             => await ProtectSingleFileWithSignalRAsync(projectKey, fileBlob, hubConnection.TaskId, configuration);
 
         public ProtectionResult ProtectSingleFile(string projectKey, string fileBlob,
-            HubConnectionExternalModel hubConnection, ApplicationConfigurationDto configuration)
+            HubConnectionExternalModel hubConnection, ProtectionConfigurationDTO configuration)
             => ProtectSingleFileWithSignalR(projectKey, fileBlob, hubConnection.TaskId, configuration);
 
-        public async Task<ProtectionResult> ProtectSingleFileWithSignalRAsync(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration)
+        public async Task<ProtectionResult> ProtectSingleFileWithSignalRAsync(string projectKey, string fileBlob, string runKey, ProtectionConfigurationDTO configuration)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace Shield.Client
                         .AddQueryParameter("projectKey", projectKey)
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)
-                        .AddJsonBody(configuration ?? new ApplicationConfigurationDto { InheritFromProject = true });
+                        .AddJsonBody(configuration ?? Parent.Configuration.Default().Inherit());
 
                 _client.ThrowOnDeserializationError = true;
 
@@ -80,7 +80,7 @@ namespace Shield.Client
         }
 
 
-        public ProtectionResult ProtectSingleFileWithSignalR(string projectKey, string fileBlob, string runKey, ApplicationConfigurationDto configuration)
+        public ProtectionResult ProtectSingleFileWithSignalR(string projectKey, string fileBlob, string runKey, ProtectionConfigurationDTO configuration)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace Shield.Client
                         .AddQueryParameter("projectKey", projectKey)
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)
-                        .AddJsonBody(configuration ?? new ApplicationConfigurationDto { InheritFromProject = true });
+                        .AddJsonBody(configuration ?? Parent.Configuration.Default().Inherit());
 
                 var result = _client.Post<ProtectionResult>(request);
 

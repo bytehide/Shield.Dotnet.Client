@@ -107,6 +107,12 @@ namespace Shield.Client.Models.API
             config.Name = name;
             return config;
         }
+
+        public static ProtectionConfigurationDTO Inherit(this ProtectionConfigurationDTO config)
+        {
+            config.InheritFromProject = true;
+            return config;
+        }
     }
 
     public class ProtectionRules : Dictionary<string, object> { }
