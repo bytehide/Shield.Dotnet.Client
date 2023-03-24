@@ -49,7 +49,7 @@ namespace Shield.Client
                         .AddQueryParameter("projectKey", projectKey)
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)
-                        .AddJsonBody(configuration ?? Parent.Configuration.Default().Inherit());
+                        .AddJsonBody(configuration.Serialize() ?? Parent.Configuration.Default().Inherit().Serialize());
 
                 _client.ThrowOnDeserializationError = true;
 
@@ -91,7 +91,7 @@ namespace Shield.Client
                         .AddQueryParameter("projectKey", projectKey)
                         .AddQueryParameter("fileBlob", fileBlob)
                         .AddQueryParameter("runKey", runKey)
-                        .AddJsonBody(configuration ?? Parent.Configuration.Default().Inherit());
+                        .AddJsonBody(configuration.Serialize() ?? Parent.Configuration.Default().Inherit().Serialize());
 
                 var result = _client.Post<ProtectionResult>(request);
 
