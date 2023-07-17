@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Text.Json;
 using Microsoft.AspNetCore.SignalR.Client;
 using Shield.Client.Models;
 using Shield.Client.Models.API.Application;

@@ -29,6 +29,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
   </ItemGroup>
 
@@ -44,5 +45,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y &quot;$(TargetPath)&quot; &quot;C:\Users\Victor\.nuget\packages\bytehide.shield.msbuild\2.0.0\netframework\&quot;&#xD;&#xA;xcopy /Y &quot;$(TargetPath)&quot; &quot;C:\Users\Victor\.nuget\packages\bytehide.shield.msbuild\2.0.0\netstandard\&quot;" />
+  </Target>
 
 </Project>

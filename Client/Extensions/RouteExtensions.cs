@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Shield.Client.Extensions
+﻿namespace Shield.Client.Extensions
 {
     public static class RouteExtensions
     {

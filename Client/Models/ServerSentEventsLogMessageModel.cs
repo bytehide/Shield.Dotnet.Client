@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Shield.Client.Models
+﻿namespace Shield.Client.Models
 {
     /// <summary>
     /// 

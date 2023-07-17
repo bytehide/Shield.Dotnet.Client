@@ -5,7 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.Json;
+using Newtonsoft.Json;
+// using System.Text.Json;
+// using System.Text.Json.Serialization;
+
 using System.Threading;
 using System.Threading.Tasks;
 using Shield.Client.Helpers;
@@ -95,7 +98,8 @@ namespace Shield.Client.Extensions
 
             if (configuration is not null)
             {
-                var jsonConfiguration = JsonSerializer.Serialize(configuration);
+                // var jsonConfiguration = JsonSerializer.Serialize(configuration);
+                var jsonConfiguration = JsonConvert.SerializeObject(configuration);
                 taskUrl += $"&applicationConfigurationDto={WebUtility.UrlEncode(jsonConfiguration)}";
             }
 
@@ -162,7 +166,7 @@ namespace Shield.Client.Extensions
 
             if (configuration is not null)
             {
-                var jsonConfiguration = JsonSerializer.Serialize(configuration);
+                var jsonConfiguration =  JsonConvert.SerializeObject(configuration);
                 taskUrl += $"&applicationConfigurationDto={WebUtility.UrlEncode(jsonConfiguration)}";
             }
 
@@ -228,7 +232,9 @@ namespace Shield.Client.Extensions
                         return;
                 }
 
-                var message = JsonSerializer.Deserialize<ServerSentEventsLogMessageModel>(msg);
+                // var message = JsonSerializer.Deserialize<ServerSentEventsLogMessageModel>(msg);
+                if (msg == null) return;
+                var message = JsonConvert.DeserializeObject<ServerSentEventsLogMessageModel>(msg);
 
                 if (message is null)
                     return;
@@ -272,7 +278,8 @@ namespace Shield.Client.Extensions
 
         private void UpdateEvents<T>(string updateData) where T : ProtectResponse
         {
-            var updates = JsonSerializer.Deserialize<T>(updateData);
+            // var updates = JsonSerializer.Deserialize<T>(updateData);
+            var updates = JsonConvert.DeserializeObject<T>(updateData);
 
             if (updates == null) return;
 

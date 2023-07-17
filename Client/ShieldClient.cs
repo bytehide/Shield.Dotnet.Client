@@ -5,14 +5,18 @@ using RestSharp.Authenticators;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Shield.Client.Models;
-using JsonSerializer = System.Text.Json.JsonSerializer;
-using System.Threading.Tasks;
 
 namespace Shield.Client
 {
+    public abstract class AuthUserDto
+    {
+        public string Email { get; set; }
+        public string Edition { get; set; }
+    }
+
     public class ShieldClient
     {
-        private readonly string _defaultHost = "https://api.bytehide.com/api";
+        private const string DefaultHost = "https://api.bytehide.com/api";
 
         public ShieldProject Project { get; set; }
         public ShieldApplication Application { get; set; }
@@ -52,7 +56,7 @@ namespace Shield.Client
             CustomLogger = customLogger;
 
             //Bytehide Client
-            Client = new RestClient(ClientConfiguration["url"] ?? _defaultHost)
+            Client = new RestClient(ClientConfiguration["url"] ?? DefaultHost)
             {
                 Authenticator = new JwtAuthenticator(apiToken), Timeout = 1000 * 60 * 10
             };
@@ -107,12 +111,6 @@ namespace Shield.Client
             code = result.StatusCode;
 
             return code != HttpStatusCode.Unauthorized && code != 0;
-        }
-
-        public class AuthUserDto
-        {
-            public string Email { get; set; }
-            public string Edition { get; set; }
         }
 
         public AuthUserDto GetSession()

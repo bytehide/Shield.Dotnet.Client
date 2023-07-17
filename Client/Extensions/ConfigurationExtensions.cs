@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text.Json;
 using Shield.Client.Models.API;
 using Shield.Client.Models.API.Application;

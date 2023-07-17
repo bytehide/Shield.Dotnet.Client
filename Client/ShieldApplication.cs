@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -85,7 +84,7 @@ namespace Shield.Client
                     .AddFile("file", file.FileContent, file.FileName, MimeTypeMap.GetMimeType(file.FileName))
                     .AddDependencies(dependencies?.Select(x => (x.FileContent, x.FileName)).ToList());
 
-                var result =  _client.Post<DirectUploadDto>(request);
+                var result = _client.Post<DirectUploadDto>(request);
 
                 Parent.CustomLogger?.LogDebug($"The application {file.FileName} has been uploaded successfully.");
 
@@ -130,7 +129,7 @@ namespace Shield.Client
                 throw new Exception($"An error occurred while uploading the application: {ex.Message}");
             }
         }
-        
+
         /// <summary>
         /// Upload an application to project
         /// </summary>
@@ -145,6 +144,11 @@ namespace Shield.Client
             {
                 Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
 
+                if (null == _client)
+                {
+                    throw new Exception("Client instance is null");
+                }
+
                 var request = new RestRequest("/app/direct".ToApiRoute())
                     .AddQueryParameter("projectKey", projectKey)
                     .AddFileFromPath(filePath)
@@ -152,24 +156,35 @@ namespace Shield.Client
 
                 var result = _client.Post<DirectUploadDto>(request);
 
-                Parent.CustomLogger?.LogDebug(
-                    $"The application {Path.GetFileName(filePath)} has been uploaded successfully.");
+                if (!result.IsSuccessful)
+                {
+                    // throw new Exception($"Deps ({dependenciesPaths.Count}): {JsonConvert.SerializeObject(dependenciesPaths, Formatting.Indented)} - Result: {JsonConvert.SerializeObject(result.Content, Formatting.Indented)}");
+                    return null;
+                }
 
-                return result.IsSuccessful ? result.Data : null;
+                Parent.CustomLogger?.LogDebug( $"The application {Path.GetFileName(filePath)} has been uploaded successfully.");
+
+                return result.Data;
+                // return result.IsSuccessful ? result.Data : null;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while uploading the application.");
+                Parent.CustomLogger?.LogCritical($"An error occurred while uploading the application: {ex.Message}.");
                 throw new Exception($"An error occurred while uploading the application: {ex.Message}");
             }
         }
+
         public async Task<byte[]> DownloadApplicationAsArrayAsync(ProtectedApplicationDto protectedApplication)
             => (await DownloadApplicationAsync(protectedApplication.DownloadKey)).ToArray();
-        public async Task<byte[]> DownloadApplicationAsArrayAsync(ProtectedApplicationDto protectedApplication, DownloadFormat format)
+
+        public async Task<byte[]> DownloadApplicationAsArrayAsync(ProtectedApplicationDto protectedApplication,
+            DownloadFormat format)
             => (await DownloadApplicationAsync(protectedApplication.DownloadKey, format)).ToArray();
 
-        public async Task<Stream> DownloadApplicationAsStreamAsync(ProtectedApplicationDto protectedApplication, DownloadFormat format)
+        public async Task<Stream> DownloadApplicationAsStreamAsync(ProtectedApplicationDto protectedApplication,
+            DownloadFormat format)
             => await DownloadApplicationAsync(protectedApplication.DownloadKey, format);
+
         public async Task<Stream> DownloadApplicationAsStreamAsync(ProtectedApplicationDto protectedApplication)
             => await DownloadApplicationAsync(protectedApplication.DownloadKey);
 
@@ -189,11 +204,13 @@ namespace Shield.Client
 
         public byte[] DownloadApplicationAsArray(ProtectedApplicationDto protectedApplication)
             => DownloadApplication(protectedApplication.DownloadKey).ToArray();
+
         public byte[] DownloadApplicationAsArray(ProtectedApplicationDto protectedApplication, DownloadFormat format)
             => DownloadApplication(protectedApplication.DownloadKey, format).ToArray();
 
         public Stream DownloadApplicationAsStream(ProtectedApplicationDto protectedApplication, DownloadFormat format)
             => DownloadApplication(protectedApplication.DownloadKey, format);
+
         public Stream DownloadApplicationAsStream(ProtectedApplicationDto protectedApplication)
             => DownloadApplication(protectedApplication.DownloadKey);
 
@@ -215,7 +232,8 @@ namespace Shield.Client
         /// <param name="downloadKey"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        internal async Task<MemoryStream> DownloadApplicationAsync(string downloadKey, DownloadFormat format = DownloadFormat.Default)
+        internal Task<MemoryStream> DownloadApplicationAsync(string downloadKey,
+            DownloadFormat format = DownloadFormat.Default)
         {
             try
             {
@@ -227,16 +245,19 @@ namespace Shield.Client
 
 
                 Parent.CustomLogger?.LogDebug("Initiating the request to download an application.");
-                using var stream = new MemoryStream();
+                var stream = new MemoryStream();
+
+                async void ResponseWriter(Stream responseStream)
+                {
+                    using (responseStream)
+                    {
+                        await responseStream.CopyToAsync(stream);
+                    }
+                }
+
                 var request = new RestRequest("/app/download".ToApiRoute())
                     {
-                        ResponseWriter = async responseStream =>
-                        {
-                            using (responseStream)
-                            {
-                                await responseStream.CopyToAsync(stream);
-                            }
-                        }
+                        ResponseWriter = ResponseWriter
                     }
                     .AddQueryParameter("key", downloadKey)
                     .AddQueryParameter("format", format == DownloadFormat.Zip ? "zip" : "default");
@@ -245,7 +266,7 @@ namespace Shield.Client
 
                 Parent.CustomLogger?.LogDebug("The application has been downloaded successfully.");
 
-                return stream;
+                return Task.FromResult(stream);
             }
             catch (Exception e)
             {
@@ -253,6 +274,7 @@ namespace Shield.Client
                 throw new ArgumentNullException($"An error occurred while downloading the file: {e.Message}");
             }
         }
+
         /// <summary>
         /// Download protected application from project
         /// </summary>
@@ -271,7 +293,7 @@ namespace Shield.Client
 
 
                 Parent.CustomLogger?.LogDebug("Initiating the request to download an application.");
-                using var stream = new MemoryStream();
+                var stream = new MemoryStream();
                 var request = new RestRequest("/app/download".ToApiRoute())
                     {
                         ResponseWriter = responseStream =>
