@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 using Shield.Client.Extensions;
+using Shield.Client.Helpers;
 using Shield.Client.Models;
 using Shield.Client.Models.API;
 
@@ -42,7 +42,8 @@ namespace Shield.Client
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to protect a single file.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to protect a single file.");
+                LogHelper.LogDebug("Initiating the request to protect a single file.");
 
                 var request =
                     new RestRequest("/protection/protect/single".ToApiRoute())
@@ -57,25 +58,31 @@ namespace Shield.Client
                 {
                     var result = await _client.PostAsync<ProtectionResult>(request);
 
-                    Parent.CustomLogger?.LogDebug($"The protection process has started successfully with the identifier: {runKey}");
+                    // Parent.CustomLogger?.LogDebug($"The protection process has started successfully with the identifier: {runKey}");
+                    LogHelper.LogDebug($"The protection process has started successfully with the identifier: {runKey}");
 
                     return result;
 
                 }
                 catch (DeserializationException ex)
                 {
+                    LogHelper.LogException(ex);
                     throw new Exception(ex.Response.Content, ex);
                 }
             }
-            catch (Exception ex) when (ex.InnerException.GetType() == typeof(DeserializationException))
+            catch (Exception ex) when (ex.InnerException != null && ex.InnerException.GetType() == typeof(DeserializationException))
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while starting the protection process.");
-                throw ex;
+                // Parent.CustomLogger?.LogCritical("An error occurred while starting the protection process.");
+                LogHelper.LogException(ex, "An error occurred while starting the protection process.");
+                throw;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while starting the protection process.");
-                throw new Exception($"An error occurred while starting the protection process. {ex.Message}");
+                // Parent.CustomLogger?.LogCritical("An error occurred while starting the protection process.");
+                // throw new Exception($"An error occurred while starting the protection process. {ex.Message}");
+                
+                LogHelper.LogException(ex,"An error occurred while starting the protection process.");
+                throw;
             }
         }
 
@@ -84,7 +91,8 @@ namespace Shield.Client
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to protect a single file.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to protect a single file.");
+                LogHelper.LogDebug("Initiating the request to protect a single file.");
 
                 var request =
                     new RestRequest("/protection/protect/single".ToApiRoute())
@@ -98,14 +106,18 @@ namespace Shield.Client
                 if (!result.IsSuccessful)
                     return null;
 
-                Parent.CustomLogger?.LogDebug($"The protection process has started successfully with the identifier: {runKey}");
+                // Parent.CustomLogger?.LogDebug($"The protection process has started successfully with the identifier: {runKey}");
+                LogHelper.LogDebug($"The protection process has started successfully with the identifier: {runKey}");
 
                 return result.Data;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while starting the protection process.");
-                throw new Exception($"An error occurred while starting the protection process. {ex.Message}");
+                // Parent.CustomLogger?.LogCritical($"An error occurred while starting the protection process.");
+                // throw new Exception($"An error occurred while starting the protection process. {ex.Message}");
+
+                LogHelper.LogException(ex,$"An error occurred while starting the protection process.");
+                throw;
             }
         }
 

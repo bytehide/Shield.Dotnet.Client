@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 using Shield.Client.Extensions;
+using Shield.Client.Helpers;
 using Shield.Client.Models.API.Project;
 
 namespace Shield.Client
@@ -18,14 +18,17 @@ namespace Shield.Client
             _client = client;
             Parent = parent;
         }
+
         public static ShieldProject CreateInstance(RestClient client)
         {
             return new ShieldProject(client, null);
         }
+
         public static ShieldProject CreateInstance(RestClient client, ShieldClient parent)
         {
-            return new ShieldProject(client,parent);
+            return new ShieldProject(client, parent);
         }
+
         /// <summary>
         /// Find or creates a Shield project
         /// </summary>
@@ -35,7 +38,8 @@ namespace Shield.Client
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
+                LogHelper.LogDebug("Initiating the request to find or create external project.");
 
                 var request =
                     new RestRequest("project/externalProject/{projectName}".ToApiRoute())
@@ -43,16 +47,21 @@ namespace Shield.Client
 
                 var result = await _client.GetAsync<ProjectDto>(request);
 
-                Parent.CustomLogger?.LogDebug($"The {projectName} project has been successfully obtained.");
+                // Parent.CustomLogger?.LogDebug($"The {projectName} project has been successfully obtained.");
+                LogHelper.LogDebug($"The {projectName} project has been successfully obtained.");
 
                 return result;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while searching or trying to create the {projectName} project.");
-                throw new Exception($"An error occurred while searching or trying to create the {projectName} project: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical($"An error occurred while searching or trying to create the {projectName} project.");
+                // throw new Exception($"An error occurred while searching or trying to create the {projectName} project: {ex.Message}");
+
+                LogHelper.LogException(ex, $"An error occurred while searching or trying to create the {projectName} project");
+                throw new Exception();
             }
         }
+
         /// <summary>
         /// Find or creates a Shield project
         /// </summary>
@@ -62,7 +71,8 @@ namespace Shield.Client
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
+                LogHelper.LogDebug("Initiating the request to find or create external project.");
 
                 var request =
                     new RestRequest("/project/externalProject/{projectName}".ToApiRoute())
@@ -73,16 +83,21 @@ namespace Shield.Client
                 if (!result.IsSuccessful)
                     return null;
 
-                Parent.CustomLogger?.LogDebug($"The {projectName} project has been successfully obtained.");
+                // Parent.CustomLogger?.LogDebug($"The {projectName} project has been successfully obtained.");
+                LogHelper.LogDebug($"The {projectName} project has been successfully obtained.");
 
                 return result.Data;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while searching or trying to create the {projectName} project.");
-                throw new Exception($"An error occurred while searching or trying to create the {projectName} project: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical( $"An error occurred while searching or trying to create the {projectName} project.");
+                // throw new Exception( $"An error occurred while searching or trying to create the {projectName} project: {ex.Message}");
+
+                LogHelper.LogException(ex, $"An error occurred while searching or trying to create the {projectName} project.");
+                throw new Exception();
             }
         }
+
         /// <summary>
         /// Find by Id or creates a Shield project
         /// </summary>
@@ -93,7 +108,8 @@ namespace Shield.Client
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
+                LogHelper.LogDebug("Initiating the request to find or create external project.");
 
                 var request =
                     new RestRequest("/project/externalProject/{projectName}".ToApiRoute())
@@ -102,16 +118,21 @@ namespace Shield.Client
 
                 var result = await _client.GetAsync<ProjectDto>(request);
 
-                Parent.CustomLogger?.LogDebug($"The {projectName} project has been successfully obtained.");
+                // Parent.CustomLogger?.LogDebug($"The {projectName} project has been successfully obtained.");
+                LogHelper.LogDebug($"The {projectName} project has been successfully obtained.");
 
                 return result;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while searching or trying to create the {projectName} project.");
-                throw new Exception($"An error occurred while searching or trying to create the {projectName} project: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical( $"An error occurred while searching or trying to create the {projectName} project.");
+                // throw new Exception( $"An error occurred while searching or trying to create the {projectName} project: {ex.Message}");
+
+                LogHelper.LogException(ex, $"An error occurred while searching or trying to create the {projectName} project.");
+                throw new Exception();
             }
         }
+
         /// <summary>
         /// Find by Id or creates a Shield project
         /// </summary>
@@ -122,7 +143,8 @@ namespace Shield.Client
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to find or create external project.");
+                LogHelper.LogDebug("Initiating the request to find or create external project.");
 
                 var request =
                     new RestRequest("/project/externalProject/{projectName}".ToApiRoute())
@@ -131,17 +153,20 @@ namespace Shield.Client
 
                 var result = _client.Get<ProjectDto>(request);
 
-                if (!result.IsSuccessful)
-                    return null;
+                if (!result.IsSuccessful) return null;
 
-                Parent.CustomLogger?.LogDebug($"The {projectName} project has been successfully obtained.");
+                // Parent.CustomLogger?.LogDebug($"The {projectName} project has been successfully obtained.");
+                LogHelper.LogDebug($"The {projectName} project has been successfully obtained.");
 
                 return result.Data;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while searching or trying to create the {projectName} project.");
-                throw new Exception($"An error occurred while searching or trying to create the {projectName} project: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical( $"An error occurred while searching or trying to create the {projectName} project.");
+                // throw new Exception( $"An error occurred while searching or trying to create the {projectName} project: {ex.Message}");
+
+                LogHelper.LogException(ex, $"An error occurred while searching or trying to create the {projectName} project.");
+                throw new Exception();
             }
         }
     }

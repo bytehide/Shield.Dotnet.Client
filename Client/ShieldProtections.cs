@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 using Shield.Client.Extensions;
+using Shield.Client.Helpers;
 using Shield.Client.Models.API.Protections;
 
 namespace Shield.Client
@@ -37,7 +37,8 @@ namespace Shield.Client
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to get project available protections.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to get project available protections.");
+                LogHelper.LogDebug("Initiating the request to get project available protections.");
 
                 var request =
                     new RestRequest("project/{projectKey}/protections/available/".ToApiRoute())
@@ -45,14 +46,18 @@ namespace Shield.Client
 
                 var result =  _client.Get<List<ProtectionDto>>(request);
 
-                Parent.CustomLogger?.LogDebug($"The available protections of {projectKey} project has been obtained correctly.");
+                // Parent.CustomLogger?.LogDebug($"The available protections of {projectKey} project has been obtained correctly.");
+                LogHelper.LogDebug($"The available protections of {projectKey} project has been obtained correctly.");
 
                 return result.IsSuccessful ? result.Data : null;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while getting available protections.");
-                throw new Exception($"An error occurred while getting the available protections: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical($"An error occurred while getting available protections.");
+                // throw new Exception($"An error occurred while getting the available protections: {ex.Message}");
+
+                LogHelper.LogException(ex,"An error occurred while getting available protections.");
+                throw;
             }
         }
         /// <summary>
@@ -64,7 +69,8 @@ namespace Shield.Client
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to get project available protections.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to get project available protections.");
+                LogHelper.LogDebug("Initiating the request to get project available protections.");
 
                 var request =
                     new RestRequest("project/{projectKey}/protections/available/".ToApiRoute())
@@ -72,14 +78,18 @@ namespace Shield.Client
 
                 var result = await _client.GetAsync<List<ProtectionDto>>(request);
 
-                Parent.CustomLogger?.LogDebug($"The available protections of [key]{projectKey} project has been obtained correctly.");
+                // Parent.CustomLogger?.LogDebug($"The available protections of [key]{projectKey} project has been obtained correctly.");
+                LogHelper.LogDebug($"The available protections of [key]{projectKey} project has been obtained correctly.");
 
                 return result;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while getting available protections.");
-                throw new Exception($"An error occurred while getting the available protections: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical($"An error occurred while getting available protections.");
+                // throw new Exception($"An error occurred while getting the available protections: {ex.Message}");
+
+                LogHelper.LogException(ex, $"An error occurred while getting available protections.");
+                throw;
             }
         }
     }

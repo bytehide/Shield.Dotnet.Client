@@ -4,6 +4,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Shield.Client.Helpers;
 using Shield.Client.Models;
 
 namespace Shield.Client
@@ -49,11 +50,23 @@ namespace Shield.Client
         }
         public ShieldClient(string apiToken, ILogger customLogger, string apiVersion = "1.1")
         {
+
+            LogHelper.InitializeLogger();
+
+            // LogHelper.LogInformation("Este es un mensaje de información.");
+            // LogHelper.LogWarning("Este es un mensaje de advertencia.");
+            // LogHelper.LogError("Este es un mensaje de error.");
+            // LogHelper.Dispose();
+
             ClientConfiguration = new ConfigurationBuilder()
                 .AddJsonFile("AppSettings.json", true, true)
                 .Build();
 
-            CustomLogger = customLogger;
+            // LogHelper.LogDebug("************** ShieldClient Initialized *****************");
+            // LogHelper.LogInformation("************** ShieldClient Initialized *****************");
+            // LogHelper.LogWarning("************** ShieldClient Initialized *****************");
+            // LogHelper.LogError("************** ShieldClient Initialized *****************");
+            // CustomLogger = customLogger;
 
             //Bytehide Client
             Client = new RestClient(ClientConfiguration["url"] ?? DefaultHost)
@@ -66,7 +79,8 @@ namespace Shield.Client
             var isShieldAuth = Client.Execute<ShieldAuthModel>(authRequest, Method.GET);
             
             if (isShieldAuth.Data is null || isShieldAuth.StatusCode is HttpStatusCode.Unauthorized or 0 or HttpStatusCode.Forbidden || !isShieldAuth.IsSuccessful) {
-                customLogger?.LogCritical("The api token provided is invalid, the client cannot be started.");
+                // customLogger?.LogCritical("The api token provided is invalid, the client cannot be started.");
+                LogHelper.LogError("The api token provided is invalid, the client cannot be started.");
                 throw new Exception("The authorization is not correct, check the api token used or log in to your account to generate a new one.");
             }
 
@@ -95,7 +109,8 @@ namespace Shield.Client
             Configuration = ShieldConfiguration.CreateInstance();
             Protections = ShieldProtections.CreateInstance(Client,this);
 
-            customLogger?.LogDebug("Shield Client instantiated");
+            // customLogger?.LogDebug("Shield Client instantiated");
+            LogHelper.LogDebug("*** Shield Client Instantiated ***");
         }
         /// <summary>
         /// Check if current client has connection to the API.
@@ -105,18 +120,15 @@ namespace Shield.Client
         public bool CheckConnection(out HttpStatusCode code)
         {
             var checkToken = new RestRequest("api/authorization/check");
-
             var result = Client.Execute(checkToken, Method.GET);
 
             code = result.StatusCode;
-
             return code != HttpStatusCode.Unauthorized && code != 0;
         }
 
         public AuthUserDto GetSession()
         {
             var checkToken = new RestRequest("api/authorization/session");
-
             var result =  Client.Execute<AuthUserDto>(checkToken, Method.GET);
 
             return result.Data;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using RestSharp;
 using Shield.Client.Extensions;
 using Shield.Client.Helpers;
@@ -40,12 +39,12 @@ namespace Shield.Client
         /// <param name="dependencies">Required dependencies list</param>
         /// <param name="projectKey">Project key (where application will be uploaded)</param>
         /// <returns></returns>
-        public async Task<DirectUploadDto> UploadApplicationDirectlyAsync(string projectKey, ShieldFile file,
-            List<ShieldFile> dependencies)
+        public async Task<DirectUploadDto> UploadApplicationDirectlyAsync(string projectKey, ShieldFile file, List<ShieldFile> dependencies)
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
+                LogHelper.LogInformation("Initiating the request to upload an application to project.");
 
                 var request = new RestRequest("/app/direct".ToApiRoute())
                     .AddJsonBody(projectKey)
@@ -54,14 +53,17 @@ namespace Shield.Client
 
                 var result = await _client.PostAsync<DirectUploadDto>(request);
 
-                Parent.CustomLogger?.LogDebug($"The application {file.FileName} has been uploaded successfully.");
+                LogHelper.LogInformation($"The application {file.FileName} has been uploaded successfully.");
 
                 return result;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while uploading the {file.FileName} application.");
-                throw new Exception($"An error occurred while uploading the {file.FileName} application: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical($"An error occurred while uploading the {file.FileName} application.");
+                // throw new Exception($"An error occurred while uploading the {file.FileName} application: {ex.Message}");
+
+                LogHelper.LogException(ex, $"An error occurred while uploading the {file.FileName} application.");
+                throw new Exception();
             }
         }
 
@@ -77,7 +79,8 @@ namespace Shield.Client
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
+                LogHelper.LogInformation("Initiating the request to upload an application to project.");
 
                 var request = new RestRequest("/app/direct".ToApiRoute())
                     .AddJsonBody(projectKey)
@@ -86,14 +89,18 @@ namespace Shield.Client
 
                 var result = _client.Post<DirectUploadDto>(request);
 
-                Parent.CustomLogger?.LogDebug($"The application {file.FileName} has been uploaded successfully.");
+                // Parent.CustomLogger?.LogDebug($"The application {file.FileName} has been uploaded successfully.");
+                LogHelper.LogInformation($"The application {file.FileName} has been uploaded successfully.");
 
                 return result.IsSuccessful ? result.Data : null;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while uploading the {file.FileName} application.");
-                throw new Exception($"An error occurred while uploading the {file.FileName} application: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical($"An error occurred while uploading the {file.FileName} application.");
+                // throw new Exception($"An error occurred while uploading the {file.FileName} application: {ex.Message}");
+
+                LogHelper.LogException(ex, $"An error occurred while uploading the {file.FileName} application.");
+                throw new Exception();
             }
         }
 
@@ -104,12 +111,12 @@ namespace Shield.Client
         /// <param name="dependenciesPaths">Required dependencies path list</param>
         /// <param name="projectKey">Project key (where application will be uploaded)</param>
         /// <returns></returns>
-        public async Task<DirectUploadDto> UploadApplicationDirectlyAsync(string projectKey, string filePath,
-            List<string> dependenciesPaths)
+        public async Task<DirectUploadDto> UploadApplicationDirectlyAsync(string projectKey, string filePath, List<string> dependenciesPaths)
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
+                LogHelper.LogInformation("Initiating the request to upload an application to project.");
 
                 var request = new RestRequest("/app/direct".ToApiRoute())
                     .AddQueryParameter("projectKey", projectKey)
@@ -118,15 +125,18 @@ namespace Shield.Client
 
                 var result = await _client.PostAsync<DirectUploadDto>(request);
 
-                Parent.CustomLogger?.LogDebug(
-                    $"The application {Path.GetFileName(filePath)} has been uploaded successfully.");
+                // Parent.CustomLogger?.LogDebug( $"The application {Path.GetFileName(filePath)} has been uploaded successfully.");
+                LogHelper.LogInformation( $"The application {Path.GetFileName(filePath)} has been uploaded successfully.");
 
                 return result;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while uploading the application.");
-                throw new Exception($"An error occurred while uploading the application: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical($"An error occurred while uploading the application.");
+                // throw new Exception($"An error occurred while uploading the application: {ex.Message}");
+
+                LogHelper.LogException(ex, $"An error occurred while uploading the application.");
+                throw new Exception();
             }
         }
 
@@ -137,16 +147,17 @@ namespace Shield.Client
         /// <param name="dependenciesPaths">Required dependencies path list</param>
         /// <param name="projectKey">Project key (where application will be uploaded)</param>
         /// <returns></returns>
-        public DirectUploadDto UploadApplicationDirectly(string projectKey, string filePath,
-            List<string> dependenciesPaths)
+        public DirectUploadDto UploadApplicationDirectly(string projectKey, string filePath, List<string> dependenciesPaths)
         {
             try
             {
-                Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
+                // Parent.CustomLogger?.LogDebug("Initiating the request to upload an application to project.");
+                LogHelper.LogInformation("Initiating the request to upload an application to project.");
 
                 if (null == _client)
                 {
-                    throw new Exception("Client instance is null");
+                    LogHelper.LogError("Client instance is null");
+                    // throw new Exception("Client instance is null");
                 }
 
                 var request = new RestRequest("/app/direct".ToApiRoute())
@@ -159,18 +170,23 @@ namespace Shield.Client
                 if (!result.IsSuccessful)
                 {
                     // throw new Exception($"Deps ({dependenciesPaths.Count}): {JsonConvert.SerializeObject(dependenciesPaths, Formatting.Indented)} - Result: {JsonConvert.SerializeObject(result.Content, Formatting.Indented)}");
+                    LogHelper.LogError("Client instance is null");
                     return null;
                 }
 
-                Parent.CustomLogger?.LogDebug( $"The application {Path.GetFileName(filePath)} has been uploaded successfully.");
+                // Parent.CustomLogger?.LogDebug( $"The application {Path.GetFileName(filePath)} has been uploaded successfully.");
+                LogHelper.LogInformation( $"The application {Path.GetFileName(filePath)} has been uploaded successfully.");
 
                 return result.Data;
                 // return result.IsSuccessful ? result.Data : null;
             }
             catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical($"An error occurred while uploading the application: {ex.Message}.");
-                throw new Exception($"An error occurred while uploading the application: {ex.Message}");
+                // Parent.CustomLogger?.LogCritical($"An error occurred while uploading the application: {ex.Message}.");
+                // throw new Exception($"An error occurred while uploading the application: {ex.Message}");
+
+                LogHelper.LogException(ex, $"An error occurred while uploading the application.");
+                throw new Exception();
             }
         }
 
@@ -239,12 +255,13 @@ namespace Shield.Client
             {
                 if (string.IsNullOrEmpty(downloadKey))
                 {
-                    Parent.CustomLogger?.LogCritical("The download key is necessary when obtaining a file.");
+                    // Parent.CustomLogger?.LogCritical("The download key is necessary when obtaining a file.");
+                    LogHelper.LogError("The download key is necessary when obtaining a file.");
                     throw new ArgumentNullException(nameof(downloadKey));
                 }
 
 
-                Parent.CustomLogger?.LogDebug("Initiating the request to download an application.");
+                LogHelper.LogInformation("Initiating the request to download an application.");
                 var stream = new MemoryStream();
 
                 async void ResponseWriter(Stream responseStream)
@@ -264,14 +281,18 @@ namespace Shield.Client
 
                 var _ = _client.DownloadData(request);
 
-                Parent.CustomLogger?.LogDebug("The application has been downloaded successfully.");
+                // Parent.CustomLogger?.LogDebug("The application has been downloaded successfully.");
+                LogHelper.LogInformation("The application has been downloaded successfully.");
 
                 return Task.FromResult(stream);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical("An error occurred while downloading the file.");
-                throw new ArgumentNullException($"An error occurred while downloading the file: {e.Message}");
+                // Parent.CustomLogger?.LogCritical("An error occurred while downloading the file.");
+                // throw new ArgumentNullException($"An error occurred while downloading the file: {e.Message}");
+
+                LogHelper.LogException(ex, "An error occurred while downloading the file.");
+                throw new ArgumentNullException();
             }
         }
 
@@ -287,12 +308,13 @@ namespace Shield.Client
             {
                 if (string.IsNullOrEmpty(downloadKey))
                 {
-                    Parent.CustomLogger?.LogCritical("The download key is necessary when obtaining a file.");
+                    // Parent.CustomLogger?.LogCritical("The download key is necessary when obtaining a file.");
+                    LogHelper.LogError("The download key is necessary when obtaining a file.");
                     throw new ArgumentNullException(nameof(downloadKey));
                 }
 
 
-                Parent.CustomLogger?.LogDebug("Initiating the request to download an application.");
+                LogHelper.LogInformation("Initiating the request to download an application.");
                 var stream = new MemoryStream();
                 var request = new RestRequest("/app/download".ToApiRoute())
                     {
@@ -309,14 +331,18 @@ namespace Shield.Client
 
                 var _ = _client.DownloadData(request);
 
-                Parent.CustomLogger?.LogDebug("The application has been downloaded successfully.");
+                // Parent.CustomLogger?.LogDebug("The application has been downloaded successfully.");
+                LogHelper.LogInformation("The application has been downloaded successfully.");
 
                 return stream;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Parent.CustomLogger?.LogCritical("An error occurred while downloading the file.");
-                throw new ArgumentNullException($"An error occurred while downloading the file: {e.Message}");
+                // Parent.CustomLogger?.LogCritical("An error occurred while downloading the file.");
+                // throw new ArgumentNullException($"An error occurred while downloading the file: {e.Message}");
+
+                LogHelper.LogException(ex, "An error occurred while downloading the file.");
+                throw new ArgumentNullException();
             }
         }
     }

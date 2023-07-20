@@ -1,52 +1,55 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>Dotnetsafer.Shield.Client</PackageId>
-    <Authors>Juan España</Authors>
-    <Company>Dotnetsafer</Company>
-    <Product>Shield</Product>
-    <Description>Dotnetsafer shield client for .NET, manage, update and protect your .NET applications from your own developments.</Description>
-    <Copyright>Dotnetsafer</Copyright>
-    <PackageProjectUrl>https://dotnetsafer.com/shield</PackageProjectUrl>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <LangVersion>latest</LangVersion>
-    <UserSecretsId>1dfd45f1-76b2-443c-8579-d6f1995981f8</UserSecretsId>
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>Dotnetsafer.Shield.Client</PackageId>
+		<Authors>Juan España</Authors>
+		<Company>Dotnetsafer</Company>
+		<Product>Shield</Product>
+		<Description>Dotnetsafer shield client for .NET, manage, update and protect your .NET applications from your own developments.</Description>
+		<Copyright>Dotnetsafer</Copyright>
+		<PackageProjectUrl>https://dotnetsafer.com/shield</PackageProjectUrl>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<LangVersion>latest</LangVersion>
+		<UserSecretsId>1dfd45f1-76b2-443c-8579-d6f1995981f8</UserSecretsId>
+		<GenerateDocumentationFile>False</GenerateDocumentationFile>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <DocumentationMarkdown>$(MSBuildProjectDirectory)\API.md</DocumentationMarkdown>
-    <VsxmdAutoDeleteXml>True</VsxmdAutoDeleteXml>
-  </PropertyGroup>
+	<PropertyGroup>
+		<DocumentationMarkdown>$(MSBuildProjectDirectory)\API.md</DocumentationMarkdown>
+		<VsxmdAutoDeleteXml>True</VsxmdAutoDeleteXml>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="RestSharp" Version="106.15.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Azure.Messaging.ServiceBus" Version="7.15.0" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="RestSharp" Version="106.15.0" />
+		<PackageReference Include="Serilog" Version="3.0.1" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="img\icon.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="img\icon.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="AppSettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="AppSettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
-  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /Y &quot;$(TargetPath)&quot; &quot;C:\Developer\unity\ByteHide\Assets\ByteHide\Plugins\Shield.Client\&quot;" />
-  </Target>-->
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /Y &quot;$(TargetPath)&quot; &quot;C:\Users\Victor\.nuget\packages\bytehide.shield.msbuild\2.0.0\netframework\&quot;&#xD;&#xA;xcopy /Y &quot;$(TargetPath)&quot; &quot;C:\Users\Victor\.nuget\packages\bytehide.shield.msbuild\2.0.0\netstandard\&quot;" />
+	</Target>
 </Project>

@@ -11,11 +11,14 @@ namespace Shield.Client.Helpers
             request.AddFile("file", path, MimeTypeMap.GetMimeType(Path.GetExtension(path)));
             return request;
         }
-        public static IRestRequest AddMultipleFiles(this IRestRequest request, List<(string name, string path, string contentType)> files)
+
+        public static IRestRequest AddMultipleFiles(this IRestRequest request,
+            List<(string name, string path, string contentType)> files)
         {
-            files.ForEach(file=>request.AddFile(file.name,file.path,file.contentType));
+            files.ForEach(file => request.AddFile(file.name, file.path, file.contentType));
             return request;
         }
+
         public static IRestRequest AddDependencies(this IRestRequest request, List<string> filesPath)
         {
             if (filesPath is null)
@@ -24,6 +27,7 @@ namespace Shield.Client.Helpers
             request.AddFile("dependencies", zipContent, name, contentType);
             return request;
         }
+
         public static IRestRequest AddDependencies(this IRestRequest request, List<(byte[] content, string name)> files)
         {
             if (files is null)
@@ -32,9 +36,11 @@ namespace Shield.Client.Helpers
             request.AddFile("dependencies", zipContent, name, contentType);
             return request;
         }
-        public static IRestRequest AddMultipleFiles(this IRestRequest request, List<(string name, byte[] content, string fileName, string contentType)> files)
+
+        public static IRestRequest AddMultipleFiles(this IRestRequest request,
+            List<(string name, byte[] content, string fileName, string contentType)> files)
         {
-            files.ForEach(file => request.AddFile(file.name,file.content,file.fileName,file.contentType));
+            files.ForEach(file => request.AddFile(file.name, file.content, file.fileName, file.contentType));
             return request;
         }
     }
