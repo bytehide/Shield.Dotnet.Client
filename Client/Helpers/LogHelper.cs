@@ -5,7 +5,7 @@ namespace Shield.Client.Helpers
 {
     public static class LogHelper
     {
-        public static void InitializeLogger(string logFileName = "logs.txt")
+        public static void InitializeLogger(string logFileName = "shield_client_logs.txt")
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -24,8 +24,7 @@ namespace Shield.Client.Helpers
 
         public static void LogError(string message) => Log.Error(message);
 
-        public static void LogException(Exception ex, string message = "An exception occurred") =>
-            Log.Error(ex, message);
+        public static void LogException(Exception ex, string message = "An exception occurred") => Log.Error(ex, message);
 
         public static void Dispose() => Log.CloseAndFlush();
     }

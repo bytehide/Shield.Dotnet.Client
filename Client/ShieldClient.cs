@@ -50,22 +50,12 @@ namespace Shield.Client
         }
         public ShieldClient(string apiToken, ILogger customLogger, string apiVersion = "1.1")
         {
-
             LogHelper.InitializeLogger();
-
-            // LogHelper.LogInformation("Este es un mensaje de información.");
-            // LogHelper.LogWarning("Este es un mensaje de advertencia.");
-            // LogHelper.LogError("Este es un mensaje de error.");
-            // LogHelper.Dispose();
 
             ClientConfiguration = new ConfigurationBuilder()
                 .AddJsonFile("AppSettings.json", true, true)
                 .Build();
 
-            // LogHelper.LogDebug("************** ShieldClient Initialized *****************");
-            // LogHelper.LogInformation("************** ShieldClient Initialized *****************");
-            // LogHelper.LogWarning("************** ShieldClient Initialized *****************");
-            // LogHelper.LogError("************** ShieldClient Initialized *****************");
             // CustomLogger = customLogger;
 
             //Bytehide Client
