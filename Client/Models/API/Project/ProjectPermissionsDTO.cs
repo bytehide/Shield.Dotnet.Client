@@ -1,4 +1,4 @@
-﻿namespace Shield.Client.Models.API.Project {
+﻿namespace Bytehide.Shield.Client.Models.API.Project {
 	public class ProjectPermissionsDto {
 		public bool CanUpdate { get; set; }
 		public bool CanDelete { get; set; }

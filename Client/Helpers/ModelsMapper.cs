@@ -1,6 +1,6 @@
-﻿using Shield.Client.Models;
+﻿using Bytehide.Shield.Client.Models;
 
-namespace Shield.Client.Helpers
+namespace Bytehide.Shield.Client.Helpers
 {
     internal static class ModelsMapper
     {

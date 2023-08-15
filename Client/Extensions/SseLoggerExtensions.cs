@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.Json;
-using Shield.Client.Models.API.Application;
+using Bytehide.Shield.Client.Models.API.Application;
 
-namespace Shield.Client.Extensions
+namespace Bytehide.Shield.Client.Extensions
 {
     /// <summary>
     /// 

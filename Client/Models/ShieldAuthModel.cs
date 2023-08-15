@@ -1,4 +1,4 @@
-﻿namespace Shield.Client.Models
+﻿namespace Bytehide.Shield.Client.Models
 {
     public class ShieldAuthModel
     {

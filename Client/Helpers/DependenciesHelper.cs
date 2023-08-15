@@ -2,7 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 
-namespace Shield.Client.Helpers
+namespace Bytehide.Shield.Client.Helpers
 {
     public static class DependenciesHelper
     {

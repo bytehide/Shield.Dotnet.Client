@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Shield.Client.Models.API.Application;
-using Shield.Client.Models.API.Protections;
+using Bytehide.Shield.Client.Models.API.Application;
+using Bytehide.Shield.Client.Models.API.Protections;
 
-namespace Shield.Client.Models.API
+namespace Bytehide.Shield.Client.Models.API
 {
     public class ExceptionsDTO
     {

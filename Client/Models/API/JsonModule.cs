@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Shield.Client.Models.API
+namespace Bytehide.Shield.Client.Models.API
 {
 	public class JsonModule
 	{

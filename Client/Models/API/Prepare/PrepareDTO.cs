@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Shield.Client.Models.API.Protections;
+using Bytehide.Shield.Client.Models.API.Protections;
 
-namespace Shield.Client.Models.API.Prepare
+namespace Bytehide.Shield.Client.Models.API.Prepare
 {
 	public class PrepareDto
 	{

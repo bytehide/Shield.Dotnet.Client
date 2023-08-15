@@ -1,4 +1,4 @@
-﻿namespace Shield.Client.Models.API.Edition {
+﻿namespace Bytehide.Shield.Client.Models.API.Edition {
 	public class FilePermissionsDto {
 		public string CurrentEdition { get; set; }
 		public int MaxFiles { get; set;  }

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Net;
+using Bytehide.Shield.Client.Helpers;
+using Bytehide.Shield.Client.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using RestSharp;
 using RestSharp.Authenticators;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
-using Shield.Client.Helpers;
-using Shield.Client.Models;
 
-namespace Shield.Client
+namespace Bytehide.Shield.Client
 {
     public abstract class AuthUserDto
     {

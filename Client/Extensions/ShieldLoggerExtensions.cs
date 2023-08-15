@@ -1,9 +1,9 @@
 ﻿using System;
+using Bytehide.Shield.Client.Models;
+using Bytehide.Shield.Client.Models.API.Application;
 using Microsoft.AspNetCore.SignalR.Client;
-using Shield.Client.Models;
-using Shield.Client.Models.API.Application;
 
-namespace Shield.Client.Extensions
+namespace Bytehide.Shield.Client.Extensions
 {
     public static class ShieldLoggerExtensions
     {

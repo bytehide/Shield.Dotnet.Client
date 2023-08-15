@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Shield.Client.Models.API.Application {
+namespace Bytehide.Shield.Client.Models.API.Application {
 	public class ApplicationDto {
 		public string Name { get; set; }
 		public string Icon { get; set; }

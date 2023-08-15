@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Shield.Client.Models.API.Application;
+using Bytehide.Shield.Client.Models.API.Application;
 
-namespace Shield.Client.Models.API.Project {
+namespace Bytehide.Shield.Client.Models.API.Project {
 	public class ProjectDto {
 		public int Id { get;  set; }
 		public string Key { get;  set; }

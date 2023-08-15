@@ -3,8 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
 
-
-namespace Shield.Client.Models.API
+namespace Bytehide.Shield.Client.Models.API
 {
     public enum ConfigurationType
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Serilog;
 
-namespace Shield.Client.Helpers
+namespace Bytehide.Shield.Client.Helpers
 {
     public static class LogHelper
     {

@@ -1,4 +1,4 @@
-﻿namespace Shield.Client.Extensions
+﻿namespace Bytehide.Shield.Client.Extensions
 {
     public static class RouteExtensions
     {

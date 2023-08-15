@@ -1,6 +1,6 @@
 ﻿
 
-namespace Shield.Client.Models.API.Project {
+namespace Bytehide.Shield.Client.Models.API.Project {
 	public class ProjectUpdateDto {
         public string Name { get; set; }
         public string Type { get;  set; }

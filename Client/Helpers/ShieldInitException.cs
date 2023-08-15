@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Shield.Client.Helpers
+namespace Bytehide.Shield.Client.Helpers
 {
     /// <summary>
     /// 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Shield.Client.Models.API.Project
+namespace Bytehide.Shield.Client.Models.API.Project
 {
     public class ProjectConfigurationDto
     {

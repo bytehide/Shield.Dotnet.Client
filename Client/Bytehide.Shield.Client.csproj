@@ -3,13 +3,13 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageId>Dotnetsafer.Shield.Client</PackageId>
-		<Authors>Juan España</Authors>
-		<Company>Dotnetsafer</Company>
+		<PackageId>Bytehide.Shield.Client</PackageId>
+		<Authors>ByteHide</Authors>
+		<Company>ByteHide S.L</Company>
 		<Product>Shield</Product>
-		<Description>Dotnetsafer shield client for .NET, manage, update and protect your .NET applications from your own developments.</Description>
-		<Copyright>Dotnetsafer</Copyright>
-		<PackageProjectUrl>https://dotnetsafer.com/shield</PackageProjectUrl>
+		<Description>ByteHide shield client for .NET, manage, update and protect your .NET applications from your own developments.</Description>
+		<Copyright>ByteHide</Copyright>
+		<PackageProjectUrl>https://www.bytehide.com/products/shield-obfuscator</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<LangVersion>latest</LangVersion>
@@ -21,6 +21,8 @@
 	<PropertyGroup>
 		<DocumentationMarkdown>$(MSBuildProjectDirectory)\API.md</DocumentationMarkdown>
 		<VsxmdAutoDeleteXml>True</VsxmdAutoDeleteXml>
+		<AssemblyVersion>1.1.0.0</AssemblyVersion>
+		<FileVersion>1.1.0.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -48,8 +50,4 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="xcopy /Y &quot;$(TargetPath)&quot; &quot;C:\Users\Victor\.nuget\packages\bytehide.shield.msbuild\2.0.0\netframework\&quot;&#xD;&#xA;xcopy /Y &quot;$(TargetPath)&quot; &quot;C:\Users\Victor\.nuget\packages\bytehide.shield.msbuild\2.0.0\netstandard\&quot;" />
-	</Target>
 </Project>

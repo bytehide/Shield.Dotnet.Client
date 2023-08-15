@@ -5,17 +5,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
+using Bytehide.Shield.Client.Helpers;
+using Bytehide.Shield.Client.Models;
+using Bytehide.Shield.Client.Models.API;
 using Newtonsoft.Json;
 // using System.Text.Json;
 // using System.Text.Json.Serialization;
 
-using System.Threading;
-using System.Threading.Tasks;
-using Shield.Client.Helpers;
-using Shield.Client.Models;
-using Shield.Client.Models.API;
-
-namespace Shield.Client.Extensions
+namespace Bytehide.Shield.Client.Extensions
 {
     //TODO: Perform actions flow:
     /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace Shield.Client.Models
+﻿namespace Bytehide.Shield.Client.Models
 {
     /// <summary>
     /// Work-Standard model of custom file for shield.

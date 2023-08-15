@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Shield.Client.Models
+namespace Bytehide.Shield.Client.Models
 {
     public static class ShieldConfigurationPresets
     {

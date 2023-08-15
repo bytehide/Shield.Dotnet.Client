@@ -2,12 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Shield.Client.Models;
-using Shield.Client.Models.API;
-using Shield.Client.Models.API.Application;
-using Shield.Client.Models.API.Project;
+using Bytehide.Shield.Client.Models;
+using Bytehide.Shield.Client.Models.API;
+using Bytehide.Shield.Client.Models.API.Application;
+using Bytehide.Shield.Client.Models.API.Project;
 
-namespace Shield.Client
+namespace Bytehide.Shield.Client
 {
     public class ShieldConfiguration
     {

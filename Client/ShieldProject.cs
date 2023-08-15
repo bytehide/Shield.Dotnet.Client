@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Bytehide.Shield.Client.Extensions;
+using Bytehide.Shield.Client.Helpers;
+using Bytehide.Shield.Client.Models.API.Project;
 using RestSharp;
-using Shield.Client.Extensions;
-using Shield.Client.Helpers;
-using Shield.Client.Models.API.Project;
 
-namespace Shield.Client
+namespace Bytehide.Shield.Client
 {
     public class ShieldProject
     {

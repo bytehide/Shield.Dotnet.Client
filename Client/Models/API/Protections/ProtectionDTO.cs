@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Shield.Client.Models.API.Application;
+using Bytehide.Shield.Client.Models.API.Application;
 
-namespace Shield.Client.Models.API.Protections
+namespace Bytehide.Shield.Client.Models.API.Protections
 {
     public class ProtectionDto
     {

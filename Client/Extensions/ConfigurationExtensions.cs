@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Text.Json;
-using Shield.Client.Models.API;
-using Shield.Client.Models.API.Application;
-using Shield.Client.Models.API.Project;
+using Bytehide.Shield.Client.Models.API;
+using Bytehide.Shield.Client.Models.API.Application;
+using Bytehide.Shield.Client.Models.API.Project;
 
-namespace Shield.Client.Extensions
+namespace Bytehide.Shield.Client.Extensions
 {
     public static class ConfigurationExtensions
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using RestSharp;
 
-namespace Shield.Client.Helpers
+namespace Bytehide.Shield.Client.Helpers
 {
     public static class FileHelper
     {
