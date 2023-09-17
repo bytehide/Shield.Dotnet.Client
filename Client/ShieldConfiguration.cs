@@ -51,7 +51,7 @@ namespace Bytehide.Shield.Client
             if (!File.Exists(path))
                 return null;
             try {
-                return JsonSerializer.Deserialize<ProtectionConfigurationDTO>(File.ReadAllText(path));
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<ProtectionConfigurationDTO>(File.ReadAllText(path));
             }
             catch {
                 return null;

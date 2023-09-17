@@ -218,6 +218,9 @@ namespace Bytehide.Shield.Client
 
         //Non-async
 
+        public byte[] DownloadPdbAsArray(ProtectedApplicationDto protectedApplication)
+           => DownloadPdb(protectedApplication.DownloadKey).ToArray();
+
         public byte[] DownloadApplicationAsArray(ProtectedApplicationDto protectedApplication)
             => DownloadApplication(protectedApplication.DownloadKey).ToArray();
 
@@ -342,6 +345,51 @@ namespace Bytehide.Shield.Client
                 // throw new ArgumentNullException($"An error occurred while downloading the file: {e.Message}");
 
                 LogHelper.LogException(ex, "An error occurred while downloading the file.");
+                throw new ArgumentNullException();
+            }
+        }
+
+
+        internal MemoryStream DownloadPdb(string downloadKey, DownloadFormat format = DownloadFormat.Default)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(downloadKey))
+                {
+                    // Parent.CustomLogger?.LogCritical("The download key is necessary when obtaining a file.");
+                    LogHelper.LogError("The download key is necessary when obtaining a pdb file.");
+                    throw new ArgumentNullException(nameof(downloadKey));
+                }
+
+
+                LogHelper.LogInformation("Initiating the request to download a pdb.");
+                var stream = new MemoryStream();
+                var request = new RestRequest("/app/download/pdb".ToApiRoute())
+                {
+                    ResponseWriter = responseStream =>
+                    {
+                        using (responseStream)
+                        {
+                            responseStream.CopyTo(stream);
+                        }
+                    }
+                }
+                    .AddQueryParameter("key", downloadKey)
+                    .AddQueryParameter("format", format == DownloadFormat.Zip ? "zip" : "default");
+
+                var _ = _client.DownloadData(request);
+
+                // Parent.CustomLogger?.LogDebug("The application has been downloaded successfully.");
+                LogHelper.LogInformation("The pdb file has been downloaded successfully.");
+
+                return stream;
+            }
+            catch (Exception ex)
+            {
+                // Parent.CustomLogger?.LogCritical("An error occurred while downloading the file.");
+                // throw new ArgumentNullException($"An error occurred while downloading the file: {e.Message}");
+
+                LogHelper.LogException(ex, "An error occurred while downloading the pdb file.");
                 throw new ArgumentNullException();
             }
         }
