@@ -3,10 +3,9 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Shield.Client;
-using Shield.Client.Extensions;
-using RestSharp.Serialization.Json;
-using Shield.Client.Models.API;
+using Bytehide.Shield.Client;
+using Bytehide.Shield.Client.Extensions;
+using Bytehide.Shield.Client.Models.API;
 
 namespace NetCore.Console.Example
 {
@@ -38,7 +37,8 @@ namespace NetCore.Console.Example
 
             var projectTest = await client.Project.FindOrCreateExternalProjectAsync("arg3");
 
-            var uploadApplicationDirectly = await client.Application.UploadApplicationDirectlyAsync(projectTest.Key, appPath, null);
+            var uploadApplicationDirectly =
+                await client.Application.UploadApplicationDirectlyAsync(projectTest.Key, appPath, null);
 
             if (uploadApplicationDirectly.RequiresDependencies ||
                 string.IsNullOrEmpty(uploadApplicationDirectly.ApplicationBlob))
@@ -54,7 +54,7 @@ namespace NetCore.Console.Example
 
             var config = client.Configuration.FindApplicationConfiguration(
                              directory,
-                Path.GetFileName(appPath)) ??
+                             Path.GetFileName(appPath)) ??
                          client.Configuration.MakeApplicationCustomConfiguration("consts mutation");
 
             var protect = await client.Tasks.ProtectSingleFileAsync(
@@ -70,8 +70,8 @@ namespace NetCore.Console.Example
 
             protect.OnSuccess(taskConnection, async dto =>
                 await (await client.Application.DownloadApplicationAsArrayAsync(dto))
-                .SaveOnAsync(save, true)
-                .ContinueWith(_ => _logger.LogInformation($"La aplicación protegida ha sido guardada en {save}"))
+                    .SaveOnAsync(save, true)
+                    .ContinueWith(_ => _logger.LogInformation($"La aplicación protegida ha sido guardada en {save}"))
             );
 
             System.Console.ReadKey();
@@ -82,7 +82,7 @@ namespace NetCore.Console.Example
             _logger.LogInformation("Application Started at {dateTime}", DateTime.UtcNow);
 
             const string directory =
-               @"C:\Users\juan\source\repos\ExceptionsApps\ExceptionsApps\bin\Debug\net7.0";
+                @"C:\Users\juan\source\repos\ExceptionsApps\ExceptionsApps\bin\Debug\net7.0";
 
             var appPath = $"{directory}\\FlappyBit Modder.exe";
 
@@ -97,7 +97,8 @@ namespace NetCore.Console.Example
 
             var projectTest = await client.Project.FindOrCreateExternalProjectAsync("hola");
 
-            var uploadApplicationDirectly = await client.Application.UploadApplicationDirectlyAsync(projectTest.Key, appPath, null);
+            var uploadApplicationDirectly =
+                await client.Application.UploadApplicationDirectlyAsync(projectTest.Key, appPath, null);
 
             if (uploadApplicationDirectly.RequiresDependencies)
             {
@@ -116,28 +117,33 @@ namespace NetCore.Console.Example
             {
                 ConfigurationType = ConfigurationType.Application,
                 Preset = "custom",
-                Protections = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, object>>
-                {
-                    { "rename", new System.Collections.Generic.Dictionary<string, object> { { "rename public", true} } }
-                }
+                Protections =
+                    new System.Collections.Generic.Dictionary<string,
+                        System.Collections.Generic.Dictionary<string, object>>
+                    {
+                        {
+                            "rename",
+                            new System.Collections.Generic.Dictionary<string, object> { { "rename public", true } }
+                        }
+                    }
             };
 
 
-                //client.Configuration.FindApplicationConfiguration(
-                //             directory,
-                //             Path.GetFileName(appPath)) ??
-                //         client.Configuration.MakeApplicationCustomConfiguration("consts mutation");
+            //client.Configuration.FindApplicationConfiguration(
+            //             directory,
+            //             Path.GetFileName(appPath)) ??
+            //         client.Configuration.MakeApplicationCustomConfiguration("consts mutation");
 
             var taskConnection = client.Connector.InstanceSseConnectorWithLogger();
 
-            taskConnection.WhereClose(()=> 
+            taskConnection.WhereClose(() =>
                 _logger.LogDebug("Connection close. Task finished.")
-                );
+            );
 
             taskConnection.WhereSuccess(async dto =>
                 await (await client.Application.DownloadApplicationAsArrayAsync(dto))
-                .SaveOnAsync(save, true)
-                .ContinueWith(_ => _logger.LogInformation($"La aplicación protegida ha sido guardada en {save}"))
+                    .SaveOnAsync(save, true)
+                    .ContinueWith(_ => _logger.LogInformation($"La aplicación protegida ha sido guardada en {save}"))
             );
 
             taskConnection.WhereError(error => _logger.LogCritical(error));
